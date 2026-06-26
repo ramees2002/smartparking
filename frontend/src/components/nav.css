@@ -1,0 +1,181 @@
+
+
+
+body{
+  margin: 0%;
+  padding: 0%;
+}
+.xq_nav_shell {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  width: 100%;
+  max-width: 100vw;   
+  overflow-x: hidden; 
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 40px;
+
+  background: rgba(10, 12, 16, 0.72);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+  box-sizing: border-box;
+}
+
+
+.xq_left_block {
+  display: flex;
+  align-items: center;
+  min-width: 140px;
+}
+
+.xq_brand_mark {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  background: linear-gradient(90deg, #f5d06f, #c4b5fd, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.xq_mid_zone {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 14px;
+
+  flex-wrap: nowrap; 
+}
+
+.xq_link_item {
+  text-decoration: none;
+
+  color: rgba(255, 255, 255, 0.78);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  padding: 9px 14px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  transition: all 0.25s ease;
+
+  white-space: nowrap;
+}
+
+.xq_link_item:hover {
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 20px rgba(196, 181, 253, 0.18);
+}
+
+
+.xq_link_item::after {
+  content: "";
+  position: absolute;
+
+  left: 20%;
+  right: 20%;
+  bottom: 5px;
+
+  height: 2px;
+  border-radius: 10px;
+
+  background: linear-gradient(90deg, #f5d06f, #a78bfa);
+
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.xq_link_item:hover::after {
+  transform: scaleX(1);
+}
+
+
+
+.xq_link_item[href="/dashboard"],
+.xq_link_item[href="/mybookings"],
+.xq_link_item[href="/myprofile"],
+.xq_link_item[href="/admin"] {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+.xq_divider {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 12px;
+}
+
+
+.xq_right_block {
+  display: flex;
+  align-items: center;
+  min-width: 100px;
+  justify-content: flex-end;
+}
+
+
+.xq_logout_btn {
+  padding: 9px 16px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 80, 80, 0.3);
+
+  background: rgba(255, 60, 60, 0.12);
+  color: #ff4d4d;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.xq_logout_btn:hover {
+  background: rgba(255, 60, 60, 0.22);
+  color: #ffffff;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 0 20px rgba(255, 60, 60, 0.3);
+}
+
+@media (max-width: 768px) {
+  .xq_nav_shell {
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+  .xq_mid_zone {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

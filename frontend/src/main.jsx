@@ -1,0 +1,10 @@
+
+import { createRoot } from 'react-dom/client'
+import "leaflet/dist/leaflet.css"
+import App from '../src/App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  
+    <App />
+  
+)
