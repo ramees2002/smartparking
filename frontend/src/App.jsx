@@ -10,7 +10,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import ProtectedRoute from './ProtectedRoute'
 import AdminDashboard from './pages/adminDashboard'
-import ParkingMap from './pages/parkingMap'
+import ParkingMap from './pages/ParkingMap'
 import Reviews from './pages/Reviews'
 
 
