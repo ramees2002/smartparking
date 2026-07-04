@@ -30,7 +30,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/user/login",
+        "https://smartparking-1eu5.onrender.com/user/login",
         {
           Name,
           password,

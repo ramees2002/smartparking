@@ -50,7 +50,7 @@ try{
 
 const res=await axios.get(
 
-`http://localhost:4000/user/profile/${userId}`
+`https://smartparking-1eu5.onrender.com/user/profile/${userId}`
 
 );
 
@@ -74,7 +74,7 @@ try{
 
 const res=await axios.get(
 
-`http://localhost:4000/booking/stats/${userId}`
+`https://smartparking-1eu5.onrender.com/booking/stats/${userId}`
 
 );
 

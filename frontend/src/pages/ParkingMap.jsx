@@ -18,7 +18,7 @@ const ParkingMap = () => {
   const loadSlots = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/admin/slots"
+        "https://smartparking-1eu5.onrender.com/admin/slots"
       );
 
       setSlots(res.data.slots || res.data);
