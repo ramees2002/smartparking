@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import "../components/register.css";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router";
 import axios from "axios";
+import "../components/register.css";
 
 const Register = () => {
 
@@ -14,11 +14,30 @@ const Register = () => {
   const [vehicleNumber, setVehicleNumber] = useState("");
   const [vehicleType, setVehicleType] = useState("");
 
+  // Redirect logged-in users
+  useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user?.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
+
+    }
+
+  }, [navigate]);
+
   async function display() {
 
     try {
 
-      const a = await axios.post(
+      await axios.post(
         "http://localhost:4000/user/register",
         {
           Name,
@@ -26,13 +45,13 @@ const Register = () => {
           phone,
           password,
           vehicleNumber,
-          vehicleType
+          vehicleType,
         }
       );
 
       alert("Registration Successful ✔");
 
-      navigate("/login");
+      navigate("/login", { replace: true });
 
     } catch (error) {
 
@@ -42,107 +61,154 @@ const Register = () => {
       );
 
     }
+
   }
 
   return (
 
     <div className="register-page">
+   
+      <div className="register-container">
 
-      <div className="register-card">
+        {/* LEFT SIDE */}
 
-        <div className="register-icon">
-          🚘
+        <div className="left-panel">
+
+          <div className="brand">
+
+            🚘 <span>SmartPark</span>
+
+          </div>
+
+          <h1>
+            Welcome
+            <br />
+            to
+            <br />
+            <span>Smart Parking</span>
+          </h1>
+
+          <p>
+            Here, we believe that finding parking
+            should be simple, fast and stress free.
+          </p>
+
+          <p>
+            Register today and enjoy secure booking,
+            live parking availability and instant
+            access to nearby parking spaces.
+          </p>
+
+          <Link to="/login">
+            Join Now!
+          </Link>
+
+          <img
+            src="review.svg"
+            alt="Parking Illustration"
+            className="left-image"
+          />
+
         </div>
 
-        <h1 className="register-title">
-          Create Account
-        </h1>
+        {/* RIGHT SIDE */}
 
-        <p className="register-subtitle">
-          Join Smart Parking and reserve slots instantly
-        </p>
+        <div className="right-panel">
 
-        <input
-          className="register-input"
-          type="text"
-          value={Name}
-          placeholder="👤 Enter Name"
-          onChange={(e) => setName(e.target.value)}
-        />
+          <h2>Create Account</h2>
 
-        <input
-          className="register-input"
-          type="email"
-          value={email}
-          placeholder="📧 Enter Email"
-          onChange={(e) => setemail(e.target.value)}
-        />
+          <p className="subtitle">
+            Join Smart Parking today
+          </p>
 
-        <input
-          className="register-input"
-          type="number"
-          value={phone}
-          placeholder="📱 Enter Phone Number"
-          onChange={(e) => setphone(e.target.value)}
-        />
+          <input
+            className="register-input"
+            type="text"
+            placeholder="👤 Enter Name"
+            value={Name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-        <input
-          className="register-input"
-          type="text"
-          value={vehicleNumber}
-          placeholder="🚗 Vehicle Number"
-          onChange={(e) => setVehicleNumber(e.target.value)}
-        />
+          <input
+            className="register-input"
+            type="email"
+            placeholder="📧 Enter Email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
+          />
 
-        <select
-          className="register-input"
-          value={vehicleType}
-          onChange={(e) => setVehicleType(e.target.value)}
-        >
-          <option value="">
-            Select Vehicle Type
-          </option>
+          <input
+            className="register-input"
+            type="number"
+            placeholder="📱 Enter Phone Number"
+            value={phone}
+            onChange={(e) => setphone(e.target.value)}
+          />
 
-          <option value="car">
-            Car
-          </option>
+          <input
+            className="register-input"
+            type="text"
+            placeholder="🚗 Vehicle Number"
+            value={vehicleNumber}
+            onChange={(e) => setVehicleNumber(e.target.value)}
+          />
 
-          <option value="bike">
-            Bike
-          </option>
-        </select>
+          <select
+            className="register-input"
+            value={vehicleType}
+            onChange={(e) => setVehicleType(e.target.value)}
+          >
+            <option value="">
+              Select Vehicle Type
+            </option>
 
-        <input
-          className="register-input"
-          type="password"
-          value={password}
-          placeholder="🔒 Enter Password"
-          onChange={(e) => setpassword(e.target.value)}
-        />
+            <option value="car">
+              Car
+            </option>
 
-        <button
-          className="register-btn"
-          onClick={display}
-        >
-          Register
-        </button>
+            <option value="bike">
+              Bike
+            </option>
 
-        <div className="register-features">
+          </select>
 
-          <div>
-            🚗 Live Slot Tracking
-          </div>
+          <input
+            className="register-input"
+            type="password"
+            placeholder="🔒 Enter Password"
+            value={password}
+            onChange={(e) => setpassword(e.target.value)}
+          />
 
-          <div>
-            ⚡ Instant Booking
-          </div>
+          <button
+            className="register-btn"
+            onClick={display}
+          >
+            Register
+          </button>
 
-          <div>
-            📍 Find Parking Areas
-          </div>
+          <div className="feature-row">
 
-          <div>
-            🔐 Secure Login
+            <div>
+              🚗
+              <span>Live Slot Tracking</span>
+            </div>
+
+            <div>
+              ⚡
+              <span>Instant Booking</span>
+            </div>
+
+            <div>
+              📍
+              <span>Find Parking Areas</span>
+            </div>
+
+            <div>
+              🔒
+              <span>Secure Login</span>
+            </div>
+
           </div>
 
         </div>
@@ -152,6 +218,7 @@ const Register = () => {
     </div>
 
   );
+
 };
 
 export default Register;

@@ -95,10 +95,11 @@ const Reviews = () => {
     setRating(review.rating);
     setComment(review.comment);
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+   document.querySelector(".review-form")
+?.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
 
   };
 
@@ -130,178 +131,361 @@ const Reviews = () => {
 
     }
   };
+return (
 
-  return (
+<div className="reviews-page">
 
-    <div className="reviews-page">
+<div className="reviews-header">
 
-      <h1 className="reviews-title">
-        ⭐ SmartPark Reviews
-      </h1>
+<div className="badge">
 
-      {/* REVIEW FORM */}
+💜 CLIENT LOVE
 
-      <div className="review-form">
+</div>
 
-        <h2>
-          {editingId
-            ? "Edit Your Review"
-            : "Write A Review"}
-        </h2>
+<h1 className="reviews-title">
 
-        <div className="form-row">
+What <span>clients</span> say
 
-          <label>
-            Rating
-          </label>
+</h1>
 
-          <select
-            value={rating}
-            onChange={(e) =>
-              setRating(
-                Number(e.target.value)
-              )
-            }
-          >
-            <option value="5">
-              ⭐⭐⭐⭐⭐ (5)
-            </option>
+<p className="review-subtitle">
 
-            <option value="4">
-              ⭐⭐⭐⭐ (4)
-            </option>
+Our clients love working with us
 
-            <option value="3">
-              ⭐⭐⭐ (3)
-            </option>
+</p>
 
-            <option value="2">
-              ⭐⭐ (2)
-            </option>
+</div>
 
-            <option value="1">
-              ⭐ (1)
-            </option>
 
-          </select>
+<div
 
-        </div>
+className={`review-list ${
+reviews.length===1
+? "one"
+: reviews.length===2
+? "two"
+: "many"
+}`}
 
-        <textarea
-          placeholder="Share your experience with SmartPark..."
-          value={comment}
-          onChange={(e) =>
-            setComment(e.target.value)
-          }
-        />
+>
 
-        <button
-          className="submit-review-btn"
-          onClick={submitReview}
-        >
-          {editingId
-            ? "Update Review"
-            : "Submit Review"}
-        </button>
+{reviews.length===0 ? (
 
-      </div>
+<div className="no-reviews">
 
-      
+No reviews yet
 
-      <div className="review-list">
+</div>
 
-        {reviews.length === 0 ? (
+) : (
 
-          <div className="no-reviews">
-            No reviews yet
-          </div>
+reviews.map((review)=>(
 
-        ) : (
+<div
 
-          reviews.map((review) => (
+key={review._id}
 
-            <div
-              key={review._id}
-              className="review-card"
-            >
+className="review-card"
 
-              <div className="review-header">
+>
 
-                <div className="review-avatar">
+<div className="quote">
 
-                  {review.userName
-                    ? review.userName
-                        .charAt(0)
-                        .toUpperCase()
-                    : "U"}
+❝
 
-                </div>
+</div>
 
-                <div>
+<p className="review-comment">
 
-                  <h3>
-                    {review.userName}
-                  </h3>
+{review.comment}
 
-                  <div className="stars">
-                    {"⭐".repeat(
-                      review.rating
-                    )}
-                  </div>
+</p>
 
-                </div>
+<div className="review-header">
 
-              </div>
+<div className="review-avatar">
 
-              <p className="review-comment">
-                {review.comment}
-              </p>
+{
 
-              <small>
-                {new Date(
-                  review.createdAt
-                ).toLocaleString()}
-              </small>
+review.userName
 
-              {review.userId === userId && (
+?
 
-                <div className="review-actions">
+review.userName
 
-                  <button
-                    className="edit-btn"
-                    onClick={() =>
-                      editReview(review)
-                    }
-                  >
-                    Edit
-                  </button>
+.charAt(0)
 
-                  <button
-                    className="delete-btn"
-                    onClick={() =>
-                      deleteReview(
-                        review._id
-                      )
-                    }
-                  >
-                    Delete
-                  </button>
+.toUpperCase()
 
-                </div>
+:
 
-              )}
+"U"
 
-            </div>
+}
 
-          ))
+</div>
 
-        )}
+<div>
 
-      </div>
+<h3>
 
-    </div>
+{review.userName}
 
-  );
+</h3>
+
+<div className="stars">
+
+{"⭐".repeat(
+
+review.rating
+
+)}
+
+</div>
+
+</div>
+
+</div>
+
+<div className="dots"></div>
+
+{
+
+review.userId===userId
+
+&&
+
+(
+
+<div className="review-actions">
+
+<button
+
+className="edit-btn"
+
+onClick={()=>
+
+editReview(
+
+review
+
+)
+
+}
+
+>
+
+Edit
+
+</button>
+
+<button
+
+className="delete-btn"
+
+onClick={()=>
+
+deleteReview(
+
+review._id
+
+)
+
+}
+
+>
+
+Delete
+
+</button>
+
+</div>
+
+)
+
+}
+
+</div>
+
+))
+
+)}
+
+</div>
+
+
+
+{/* REVIEW FORM */}
+
+<div className="review-form">
+
+<div className="form-content">
+
+<div className="form-left">
+
+<div className="form-icon">
+
+✏️
+
+</div>
+
+<h2>
+
+{
+
+editingId
+
+?
+
+"Edit "
+
+:
+
+"Write "
+
+}
+
+<span>
+
+Review
+
+</span>
+
+</h2>
+
+<p>
+
+Share your experience and help
+others make better decisions.
+
+</p>
+
+
+<div className="form-row">
+
+<select
+
+value={rating}
+
+onChange={(e)=>
+
+setRating(
+
+Number(
+
+e.target.value
+
+)
+
+)
+
+}
+
+>
+
+<option value="5">
+
+⭐⭐⭐⭐⭐
+
+</option>
+
+<option value="4">
+
+⭐⭐⭐⭐
+
+</option>
+
+<option value="3">
+
+⭐⭐⭐
+
+</option>
+
+<option value="2">
+
+⭐⭐
+
+</option>
+
+<option value="1">
+
+⭐
+
+</option>
+
+</select>
+
+</div>
+
+
+<textarea
+
+placeholder="Share your experience..."
+
+value={comment}
+
+onChange={(e)=>
+
+setComment(
+
+e.target.value
+
+)
+
+}
+
+/>
+
+
+<button
+
+className="submit-review-btn"
+
+onClick={submitReview}
+
+>
+
+{
+
+editingId
+
+?
+
+"Update Review"
+
+:
+
+"Submit Review"
+
+}
+
+</button>
+
+</div>
+
+
+
+<div className="form-right">
+
+<img
+
+src="/review.svg"
+
+alt="review"
+
+/>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+);
+ 
 };
 
 export default Reviews;

@@ -1,181 +1,724 @@
+/* ==========================================
+   GOOGLE FONT
+========================================== */
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
 
 body{
-  margin: 0%;
-  padding: 0%;
-}
-.xq_nav_shell {
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-
-  width: 100%;
-  max-width: 100vw;   
-  overflow-x: hidden; 
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 14px 40px;
-
-  background: rgba(10, 12, 16, 0.72);
-  backdrop-filter: blur(26px);
-  -webkit-backdrop-filter: blur(26px);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-
-  box-sizing: border-box;
+    margin:0;
+    padding:0;
 }
 
+/* ==========================================
+   NAVBAR
+========================================== */
 
-.xq_left_block {
-  display: flex;
-  align-items: center;
-  min-width: 140px;
+.xq_nav_shell{
+
+    position:sticky;
+    top:0;
+
+    z-index:9999;
+
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:8px 28px;
+
+    transition:.35s ease;
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
 }
 
-.xq_brand_mark {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 1px;
+/* ==========================================
+   LIGHT NAVBAR
+========================================== */
 
-  background: linear-gradient(90deg, #f5d06f, #c4b5fd, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.xq_nav_shell:not(.logged_nav){
+
+    background:rgba(255,255,255,.72);
+
+    border-bottom:1px solid rgba(220,230,255,.65);
+
+    box-shadow:
+    0 8px 30px rgba(0,0,0,.06);
+
 }
 
+/* ==========================================
+   DARK NAVBAR
+========================================== */
 
-.xq_mid_zone {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.xq_nav_shell.logged_nav{
 
-  gap: 14px;
+    background:rgba(15,23,42,.82);
 
-  flex-wrap: nowrap; 
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.35);
+
 }
 
-.xq_link_item {
-  text-decoration: none;
+/* ==========================================
+   LEFT
+========================================== */
 
-  color: rgba(255, 255, 255, 0.78);
+.xq_left_block{
 
-  font-size: 14px;
-  font-weight: 500;
+    display:flex;
+    align-items:center;
 
-  padding: 9px 14px;
-  border-radius: 14px;
+    min-width:220px;
 
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  transition: all 0.25s ease;
-
-  white-space: nowrap;
 }
 
-.xq_link_item:hover {
-  color: #fff;
+/* ==========================================
+   LOGO
+========================================== */
 
-  background: rgba(255, 255, 255, 0.08);
+.xq_brand_mark{
 
-  transform: translateY(-2px);
+    font-size:20px;
 
-  box-shadow:
-    0 0 20px rgba(196, 181, 253, 0.18);
+    font-weight:700;
+
+    letter-spacing:.3px;
+
+    line-height: 1.1;
+
+    transition:.3s;
+
 }
 
+.xq_nav_shell:not(.logged_nav) .xq_brand_mark{
 
-.xq_link_item::after {
-  content: "";
-  position: absolute;
+    color:#1F2D5A;
 
-  left: 20%;
-  right: 20%;
-  bottom: 5px;
-
-  height: 2px;
-  border-radius: 10px;
-
-  background: linear-gradient(90deg, #f5d06f, #a78bfa);
-
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
 }
 
-.xq_link_item:hover::after {
-  transform: scaleX(1);
+.xq_nav_shell.logged_nav .xq_brand_mark{
+    color:#ffffff !important;
+    text-shadow:0 0 10px rgba(255,255,255,.35);
 }
 
+.xq_brand_mark:hover{
 
+    transform:translateY(-1px);
 
-.xq_link_item[href="/dashboard"],
-.xq_link_item[href="/mybookings"],
-.xq_link_item[href="/myprofile"],
-.xq_link_item[href="/admin"] {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* ==========================================
+   CENTER MENU
+========================================== */
+
+.xq_mid_zone{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
 }
 
+/* ==========================================
+   NAV LINKS
+========================================== */
 
-.xq_divider {
-  color: rgba(255, 255, 255, 0.18);
-  font-size: 12px;
+.xq_link_item{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    min-width:120px;
+
+    height:38px;
+
+    padding:0 20px;
+
+    border-radius:14px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.30s ease;
+
+    overflow:hidden;
+
 }
 
+/* ---------- BEFORE LOGIN ---------- */
 
-.xq_right_block {
-  display: flex;
-  align-items: center;
-  min-width: 100px;
-  justify-content: flex-end;
+.xq_nav_shell:not(.logged_nav) .xq_link_item{
+
+    color:#243B6B;
+
+    background:rgba(255,255,255,.55);
+
+    border:1px solid rgba(220,228,245,.85);
+
+    backdrop-filter:blur(10px);
+
 }
 
+.xq_nav_shell:not(.logged_nav) .xq_link_item:hover{
 
-.xq_logout_btn {
-  padding: 9px 16px;
+    color:#fff;
 
-  border-radius: 14px;
+    background:linear-gradient(
+        135deg,
+        #3B82F6,
+        #4F46E5
+    );
 
-  border: 1px solid rgba(255, 80, 80, 0.3);
+    border-color:transparent;
 
-  background: rgba(255, 60, 60, 0.12);
-  color: #ff4d4d;
+    transform:translateY(-2px);
 
-  font-size: 13px;
-  font-weight: 600;
+    box-shadow:
+        0 10px 24px rgba(59,130,246,.25);
 
-  cursor: pointer;
-
-  transition: all 0.25s ease;
 }
 
-.xq_logout_btn:hover {
-  background: rgba(255, 60, 60, 0.22);
-  color: #ffffff;
+/* ---------- AFTER LOGIN ---------- */
 
-  transform: translateY(-2px);
+.xq_nav_shell.logged_nav .xq_link_item{
 
-  box-shadow: 0 0 20px rgba(255, 60, 60, 0.3);
+    color:#E5E7EB;
+
+    background:rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.08);
+
 }
 
-@media (max-width: 768px) {
-  .xq_nav_shell {
-    flex-direction: column;
-    gap: 10px;
-    padding: 14px 16px;
-  }
+.xq_nav_shell.logged_nav .xq_link_item:hover{
 
-  .xq_mid_zone {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+    color:#fff;
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #4F46E5
+    );
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(37,99,235,.35);
+
+}
+
+/* ==========================================
+   ACTIVE LINK
+========================================== */
+
+.xq_link_item.active{
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #4F46E5
+    ) !important;
+
+    color:#fff !important;
+
+    border:none !important;
+
+}
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.xq_divider{
+
+    font-size:12px;
+
+    opacity:.35;
+
+    user-select:none;
+
+}
+
+.xq_nav_shell:not(.logged_nav) .xq_divider{
+
+    color:#64748B;
+
+}
+
+.xq_nav_shell.logged_nav .xq_divider{
+
+    color:#CBD5E1;
+
+}
+
+/* ==========================================
+   RIGHT SECTION
+========================================== */
+
+.xq_right_block{
+
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+
+    gap:14px;
+
+    min-width:170px;
+
+}
+
+/* ==========================================
+   NOTIFICATION WRAPPER
+========================================== */
+
+.xq_notification_wrapper{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+/* ==========================================
+   BELL ICON
+========================================== */
+
+.xq_notification_icon{
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.30s ease;
+
+}
+
+/* Guest */
+
+.xq_nav_shell:not(.logged_nav) .xq_notification_icon{
+
+    background:rgba(255,255,255,.60);
+
+    color:#2563EB;
+
+    border:1px solid rgba(220,228,245,.90);
+
+}
+
+/* Logged */
+
+.xq_nav_shell.logged_nav .xq_notification_icon{
+
+    background:rgba(255,255,255,.08);
+
+    color:#ffffff;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.xq_notification_icon:hover{
+
+    background:linear-gradient(
+        135deg,
+        #2563EB,
+        #4F46E5
+    );
+
+    color:#fff;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(37,99,235,.35);
+
+}
+
+/* ==========================================
+   BADGE
+========================================== */
+
+.xq_notification_badge{
+
+    position:absolute;
+
+    top:-5px;
+    right:-5px;
+
+    min-width:20px;
+    height:20px;
+
+    padding:0 5px;
+
+    border-radius:50px;
+
+    background:#EF4444;
+
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    border:2px solid white;
+
+}
+
+/* ==========================================
+   DROPDOWN
+========================================== */
+
+.xq_notification_dropdown{
+
+    position:absolute;
+
+    top:52px;
+    right:0;
+
+    width:280px;
+
+    max-height:320px;
+
+    overflow-y:auto;
+
+    border-radius:16px;
+
+    z-index:9999;
+
+    animation:dropdown .25s ease;
+
+}
+
+/* Guest */
+
+.xq_nav_shell:not(.logged_nav) .xq_notification_dropdown{
+
+    background:rgba(255,255,255,.95);
+
+    border:1px solid rgba(225,230,245,.85);
+
+    box-shadow:
+        0 16px 35px rgba(0,0,0,.12);
+
+}
+
+/* Logged */
+
+.xq_nav_shell.logged_nav .xq_notification_dropdown{
+
+    background:#1E293B;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.45);
+
+}
+
+/* ==========================================
+   LOGOUT BUTTON
+========================================== */
+
+.xq_logout_btn{
+
+    height:38px;
+
+    padding:0 20px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#fff;
+
+    background:linear-gradient(
+        135deg,
+        #EF4444,
+        #DC2626
+    );
+
+    transition:.30s ease;
+
+    box-shadow:
+        0 10px 24px rgba(220,38,38,.25);
+
+}
+
+.xq_logout_btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 14px 30px rgba(220,38,38,.35);
+
+}
+
+/* ==========================================
+   NOTIFICATION LIST
+========================================== */
+
+.xq_notification_dropdown::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.xq_notification_dropdown::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+.xq_notification_dropdown::-webkit-scrollbar-thumb{
+
+    background:#4F46E5;
+
+    border-radius:20px;
+
+}
+
+.xq_notification_dropdown p{
+
+    padding:16px;
+
+    margin:0;
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:#64748B;
+
+}
+
+.xq_nav_shell.logged_nav .xq_notification_dropdown p{
+
+    color:#CBD5E1;
+
+}
+
+.xq_notification_dropdown>div{
+
+    padding:12px 16px;
+
+    transition:.25s;
+    background-color: white;
+
+}
+
+.xq_notification_dropdown>div:hover{
+
+    background:wheat;
+
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes dropdown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-8px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.xq_nav_shell{
+
+    padding:12px 18px;
+
+}
+
+.xq_mid_zone{
+
+    gap:10px;
+
+}
+
+.xq_link_item{
+
+    min-width:105px;
+
+    padding:0 16px;
+
+    font-size:13px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.xq_nav_shell{
+
+    flex-direction:column;
+
+    gap:14px;
+
+    align-items:center;
+
+}
+
+.xq_left_block{
+
+    width:100%;
+
+    justify-content:center;
+
+}
+
+.xq_mid_zone{
+
+    width:100%;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+.xq_right_block{
+
+    width:100%;
+
+    justify-content:center;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.xq_mid_zone{
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.xq_link_item{
+
+    width:100%;
+
+}
+
+.xq_logout_btn{
+
+    width:100%;
+
+}
+
+}
+
+/* ==========================================
+   SMALL POLISH
+========================================== */
+
+.xq_brand_mark{
+
+    user-select:none;
+
+}
+
+.xq_link_item,
+.xq_logout_btn,
+.xq_notification_icon{
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+.xq_link_item:active{
+
+    transform:scale(.97);
+
+}
+
+.xq_logout_btn:active{
+
+    transform:scale(.97);
+
+}
+
+.xq_notification_icon:active{
+
+    transform:scale(.95);
+
+}
+.ramees{
+  color:#3B82F6;
+}
+.xq_logo_icon{
+   color:#3B82F6;
 }

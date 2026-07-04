@@ -4,248 +4,780 @@ import { useNavigate } from "react-router";
 import "../components/dashboard.css";
 
 const Dashboard = () => {
-  const [slots, setSlots] = useState([]);
-  const [selectedId, setSelectedId] = useState(null);
-  const [selectedSlot, setSelectedSlot] = useState(null);
 
-  const navigate = useNavigate();
-  const userId = localStorage.getItem("userId");
+const [slots,setSlots]=useState([]);
+const [selectedId,setSelectedId]=useState(null);
+const [selectedSlot,setSelectedSlot]=useState(null);
 
-  
+const navigate=useNavigate();
 
-  const getSlots = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:4000/slot/getallslots"
-      );
+const userId=localStorage.getItem("userId");
 
-      setSlots(res.data.slot || []);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+const getSlots=async()=>{
 
-  
+try{
 
-  useEffect(() => {
-    getSlots();
+const res=await axios.get(
+"http://localhost:4000/slot/getallslots"
+);
 
-    const interval = setInterval(() => {
-      getSlots();
-    }, 3000);
+setSlots(res.data.slot||[]);
 
-    return () => clearInterval(interval);
-  }, []);
+}
 
-  
+catch(err){
 
-  const bookSlot = async () => {
-    try {
-      if (!selectedId) {
-        alert("Select a slot first");
-        return;
-      }
+console.log(err);
 
-      const orderRes = await axios.post(
-        "http://localhost:4000/payment/create-booking-order",
-        {
-          userId,
-        }
-      );
+}
 
-      const options = {
-        key: "rzp_test_T5kUMCMMGXIeay",
+};
 
-        amount: orderRes.data.amount,
+useEffect(()=>{
 
-        currency: "INR",
+getSlots();
 
-        name: "SmartPark",
+const interval=setInterval(()=>{
 
-        description: "Parking Slot Booking",
+getSlots();
 
-        order_id: orderRes.data.id,
+},3000);
 
-        handler: async function (response) {
-          try {
-            const verifyRes = await axios.post(
-              "http://localhost:4000/payment/verify-booking-payment",
-              {
-                razorpay_order_id:
-                  response.razorpay_order_id,
+return ()=>clearInterval(interval);
 
-                razorpay_payment_id:
-                  response.razorpay_payment_id,
+},[]);
 
-                razorpay_signature:
-                  response.razorpay_signature,
+const bookSlot=async()=>{
 
-                slotId: selectedId,
+try{
 
-                userId,
-              }
-            );
+if(!selectedId){
 
-            if (verifyRes.data.success) {
-              alert(
-                "Payment Successful. Slot Booked!"
-              );
+alert("Select a slot first");
 
-              setSelectedId(null);
-              setSelectedSlot(null);
+return;
 
-              getSlots();
+}
 
-              navigate("/mybookings");
-            }
-          } catch (err) {
-            console.log(err);
-            alert("Payment Verification Failed");
-          }
-        },
+const orderRes=await axios.post(
 
-        theme: {
-          color: "#2563eb",
-        },
-      };
+"http://localhost:4000/payment/create-booking-order",
 
-      const razorpay = new window.Razorpay(
-        options
-      );
+{
 
-      razorpay.open();
+userId
 
-    } catch (err) {
-      console.log(err);
-      alert("Unable to start payment");
-    }
-  };
+}
 
-  
+);
 
-  const total = slots.length;
+const options={
 
-  const booked = slots.filter(
-    (s) => s.status === "booked"
-  ).length;
+key:"rzp_test_T5kUMCMMGXIeay",
 
-  const available = slots.filter(
-    (s) => s.status === "available"
-  ).length;
+amount:orderRes.data.amount,
 
-  return (
-    <div className="dash-wrapper">
+currency:"INR",
 
-      <h1 className="dash-title">
-        Smart Parking Dashboard
-      </h1>
+name:"SmartPark",
 
-      <div className="dash-stats">
+description:"Parking Slot Booking",
 
-        <div className="stat-box total">
-          Total <span>{total}</span>
-        </div>
+order_id:orderRes.data.id,
 
-        <div className="stat-box available">
-          Available <span>{available}</span>
-        </div>
+handler:async function(response){
 
-        <div className="stat-box booked">
-          Booked <span>{booked}</span>
-        </div>
+try{
 
-      </div>
+const verifyRes=await axios.post(
 
-      <div className="parking-selected-box">
-        Selected Slot: {selectedSlot || "None"}
-      </div>
+"http://localhost:4000/payment/verify-booking-payment",
 
-      <div className="slot-container">
+{
 
-        {slots.map((slot) => {
+razorpay_order_id:
+response.razorpay_order_id,
 
-          const isMine =
-            String(slot.bookedBy) ===
-            String(userId);
+razorpay_payment_id:
+response.razorpay_payment_id,
 
-          return (
-            <button
-              key={slot._id}
-              className={`parking-slot-card ${
-                slot.status === "booked"
-                  ? "parking-booked"
-                  : selectedId === slot._id
-                  ? "parking-selected"
-                  : ""
-              }`}
-              onClick={() => {
+razorpay_signature:
+response.razorpay_signature,
 
-                if (
-                  slot.status === "booked" &&
-                  !isMine
-                ) {
-                  alert(
-                    "Already booked by another user"
-                  );
-                  return;
-                }
+slotId:selectedId,
 
-                setSelectedId(slot._id);
-                setSelectedSlot(
-                  slot.slotNumber
-                );
-              }}
-            >
-              {slot.slotNumber}
+userId
 
-              {slot.status === "booked" &&
-              isMine
-                ? " (You)"
-                : ""}
-            </button>
-          );
-        })}
+}
 
-      </div>
+);
 
-      <div className="action-bar">
+if(verifyRes.data.success){
 
-        <button
-          className="btn book"
-          onClick={bookSlot}
-        >
-          Pay ₹50 & Book Slot
-        </button>
+alert("Payment Successful. Slot Booked!");
 
-        <button
-          className="btn book"
-          onClick={() => navigate("/map")}
-          style={{
-            marginLeft: "10px",
-          }}
-        >
-          Parking Location
-        </button>
+setSelectedId(null);
 
-      </div>
+setSelectedSlot(null);
 
-      <div
-        style={{
-          marginTop: "20px",
-          textAlign: "center",
-          color: "#c60c02",
-          fontWeight: "bold",
-        }}
-      >
-        To cancel a booking, go to
-        {" "}
-        <b>My Bookings</b>
-        {" "}
-        page.
-      </div>
+getSlots();
+
+navigate("/mybookings");
+
+}
+
+}
+
+catch(err){
+
+console.log(err);
+
+alert("Payment Verification Failed");
+
+}
+
+},
+
+theme:{
+
+color:"#2563eb"
+
+}
+
+};
+
+const razorpay=new window.Razorpay(options);
+
+razorpay.open();
+
+}
+
+catch(err){
+
+console.log(err);
+
+alert("Unable to start payment");
+
+}
+
+};
+
+const total=slots.length;
+
+const booked=slots.filter(
+s=>s.status==="booked"
+).length;
+
+const available=slots.filter(
+s=>s.status==="available"
+).length;
+
+const bookingData=Array.from(
+
+{length:10},
+
+(_,i)=>{
+
+return Math.max(
+
+booked*6-
+
+Math.abs(i-4)*8,
+
+8
+
+);
+
+}
+
+);
+
+const labels=[
+
+"6AM",
+"8AM",
+"10AM",
+"12PM",
+"2PM",
+"4PM",
+"6PM",
+"8PM",
+"10PM",
+"12AM"
+
+];
+
+return(
+
+<div className="dash-wrapper">
+
+<div className="dashboard-container">
+
+<div className="dashboard-heading">
+
+<h1>
+
+<span className="heading-dark">
+
+Smart Parking
+
+</span>
+
+<span className="heading-yellow">
+
+Dashboard
+
+</span>
+
+</h1>
+
+<p>
+
+Monitor availability and reserve your parking spot
+
+</p>
+
+</div>
+
+<div className="dashboard-top">
+
+<div className="dashboard-card live-status-card">
+
+<div className="card-header">
+
+<h2>
+
+Live Parking Status
+
+</h2>
+
+<div className="status-badge">
+
+{
+
+available>0
+
+?
+
+"Space Available"
+
+:
+
+"Parking Full"
+
+}
+
+</div>
+
+</div>
+
+<div className="live-status-body">
+
+<div className="live-circle-area">
+
+<div
+
+className="parking-progress-circle"
+
+style={{
+
+background:
+
+`conic-gradient(
+
+#296CFF 0deg
+
+${(total?available/total:0)*360}deg,
+
+#FFD34D
+
+${(total?available/total:0)*360}deg
+
+360deg
+
+)`
+
+}}
+
+>
+
+<div className="parking-progress-inner">
+
+<h1>
+
+{available}
+
+</h1>
+
+<p>
+
+Available
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div className="live-status-right">
+
+<div className="status-item">
+
+<div className="status-left">
+
+<div className="dot blue"></div>
+
+<span>
+
+Available Slots
+
+</span>
+
+</div>
+
+<h3>
+
+{available}
+
+</h3>
+
+</div>
+
+<div className="status-item">
+
+<div className="status-left">
+
+<div className="dot yellow"></div>
+
+<span>
+
+Occupied Slots
+
+</span>
+
+</div>
+
+<h3>
+
+{booked}
+
+</h3>
+
+</div>
+
+<div className="status-item total-row">
+
+<span>
+
+Total Slots
+
+</span>
+
+<h3>
+
+{total}
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div className="dashboard-card graph-card">
+
+<div className="card-header">
+
+<h2>
+
+Booking Analytics
+
+</h2>
+
+<span>
+
+Today
+
+</span>
+
+</div>
+
+<div className="graph-area">
+
+{
+
+bookingData.map(
+
+(bar,index)=>(
+
+<div
+
+className="bar-wrapper"
+
+key={index}
+
+>
+
+<div
+
+className={`graph-bar ${
+index===bookingData.indexOf(
+Math.max(...bookingData)
+)
+?
+"peak"
+:
+""
+}`}
+
+style={{
+
+height:
+
+`${bar*3}px`
+
+}}
+
+>
+
+</div>
+
+<span>
+
+{labels[index]}
+
+</span>
+
+</div>
+
+))
+
+}
+
+</div>
+
+</div>
+
+<div className="dashboard-card rush-card">
+
+<div className="rush-tag">
+
+{
+
+booked>0
+
+?
+
+`${booked} Booked`
+
+:
+
+"Not Booked"
+
+}
+
+</div>
+
+<h2>
+
+{
+
+selectedSlot
+
+?
+
+`Slot ${selectedSlot}`
+
+:
+
+"Find Parking"
+
+}
+
+</h2>
+
+<p>
+
+{
+
+selectedSlot
+
+?
+
+"Your parking slot is selected successfully."
+
+:
+
+"Locate your reserved parking slot instantly."
+
+}
+
+</p>
+
+<button
+
+className="rush-btn"
+
+onClick={()=>navigate("/map")}
+
+>
+
+Find Location
+
+</button>
+
+</div>
+
+</div>
+<div className="dashboard-bottom">
+
+<div className="dashboard-card parking-grid-card">
+
+<div className="card-header">
+
+<h2>
+
+Parking Slots
+
+</h2>
+
+<span>
+
+{available}
+
+Available
+
+</span>
+
+</div>
+
+<div className="slot-toolbar">
+
+<div>
+
+Selected Slot :
+
+<strong>
+
+{
+
+selectedSlot ||
+
+" None"
+
+}
+
+</strong>
+
+</div>
+
+<input
+
+className="search-box"
+
+placeholder="Search slot"
+
+/>
+
+</div>
+
+<div className="parking-grid">
+
+{
+
+slots.map(
+
+(slot)=>(
+
+<div
+
+key={slot._id}
+
+className={`parking-slot
+
+${slot.status}
+
+${selectedId===slot._id
+
+?
+
+"selected"
+
+:
+
+""
+
+}
+
+`}
+
+onClick={()=>{
+
+if(
+
+slot.status==="available"
+
+){
+
+setSelectedId(slot._id);
+
+setSelectedSlot(
+
+slot.slotNumber
+
+);
+
+}
+
+else{
+
+alert(
+
+"This slot is already booked"
+
+);
+
+}
+
+}}
+
+>
+
+<div className="slot-number">
+
+{
+
+slot.slotNumber
+
+}
+
+</div>
+
+<div className="slot-status-text">
+
+{
+
+slot.status
+
+}
+
+</div>
+
+</div>
+
+))
+
+}
+
+</div>
+
+{
+
+selectedSlot && (
+
+<div className="booking-action-panel">
+
+<p>
+
+Selected :
+
+<strong>
+
+{selectedSlot}
+
+</strong>
+
+</p>
+
+<button
+
+className="book-now-btn"
+
+onClick={bookSlot}
+
+>
+
+Pay ₹50 & Book Slot
+
+</button>
+
+</div>
+
+)
+
+}
+
+</div>
+
+<div className="dashboard-side">
+
+<div className="dashboard-card fitness-card">
+
+    <div className="promo-badge">
+
+        Offer
 
     </div>
-  );
+
+    <h1>
+
+        Flat ₹10 Cashback
+
+    </h1>
+
+    <p>
+
+        Book parking slots online and
+        receive instant rewards for every
+        booking.
+
+    </p>
+
+    <div className="offer-icon">
+
+        🎁
+
+    </div>
+
+</div>
+
+<div className="dashboard-card stats-card">
+
+<h1>
+
+{booked}
+
+</h1>
+
+<p>
+
+Total Bookings
+
+</p>
+
+<span>
+
+Live Count
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+);
+
 };
 
 export default Dashboard;

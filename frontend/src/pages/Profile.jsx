@@ -1,356 +1,652 @@
-import React, { useEffect, useState } from "react";
+import React,{useEffect,useState} from "react";
 import axios from "axios";
+
+import {
+
+FaEnvelope,
+FaPhone,
+FaCar,
+FaIdCard,
+FaParking,
+FaCalendarAlt
+
+} from "react-icons/fa";
+
+import {
+
+MdDirectionsCar
+
+} from "react-icons/md";
+
 import "../components/profile.css";
 
-const Profile = () => {
+import heroCar from "../assets/hero-car.svg";
+import phoneImg from "../assets/mobile.svg";
+import secureImg from "../assets/security.svg";
+import parkImg from "../assets/parking-sign.svg";
 
-  const [user, setUser] = useState(null);
-  const [stats, setStats] = useState(null);
+const Profile=()=>{
 
-  const userId = localStorage.getItem("userId");
+const [user,setUser]=useState(null);
+const [stats,setStats]=useState(null);
 
+const userId=localStorage.getItem("userId");
 
-  useEffect(() => {
+useEffect(()=>{
 
-    if (userId) {
-      fetchProfile();
-      fetchStats();
-    }
+if(userId){
 
-  }, [userId]);
+fetchProfile();
+fetchStats();
 
+}
 
+},[userId]);
 
-  const fetchProfile = async () => {
 
-    try {
+const fetchProfile=async()=>{
 
-      const res = await axios.get(
-        `http://localhost:4000/user/profile/${userId}`
-      );
+try{
 
-      setUser(res.data.user);
+const res=await axios.get(
 
+`http://localhost:4000/user/profile/${userId}`
 
-    } catch (err) {
+);
 
-      console.log(err.message);
+setUser(res.data.user);
 
-    }
+}
 
-  };
+catch(err){
 
+console.log(err);
 
-
-  const fetchStats = async () => {
-
-    try {
-
-      const res = await axios.get(
-        `http://localhost:4000/booking/stats/${userId}`
-      );
-
-
-      setStats(res.data);
-
-
-    } catch (err) {
-
-      console.log(err.message);
-
-    }
-
-  };
-
-
-
-  if (!user) {
-
-    return (
-
-      <div className="profile-loader">
-
-        Loading Profile...
-
-      </div>
-
-    );
-
-  }
-
-
-
-  return (
-
-    <div className="profile-shell">
-
-
-      <h1 className="profile-title">
-
-        My Profile
-
-      </h1>
-
-
-
-
-      <div className="profile-card">
-
-
-        <div className="profile-header">
-
-
-          <div className="profile-avatar">
-
-            {user?.Name?.charAt(0).toUpperCase()}
-
-          </div>
-
-
-
-          <div>
-
-
-            <h2>
-
-              {user.Name}
-
-            </h2>
-
-
-            <span>
-
-              Parking Member
-
-            </span>
-
-
-          </div>
-
-
-
-        </div>
-
-
-
-
-
-        <div className="profile-section">
-
-
-          <h3>
-
-            Personal Information
-
-          </h3>
-
-
-
-          <div className="profile-row">
-
-            <p>Email</p>
-
-            <b>
-
-              {user.email}
-
-            </b>
-
-          </div>
-
-
-
-
-          <div className="profile-row">
-
-            <p>Phone</p>
-
-            <b>
-
-              {user.phone}
-
-            </b>
-
-          </div>
-
-
-
-
-          <div className="profile-row">
-
-            <p>User ID</p>
-
-            <b>
-
-              {user._id.slice(0, 10)}...
-
-            </b>
-
-          </div>
-
-
-
-        </div>
-
-
-
-
-
-
-
-        <div className="profile-section">
-
-
-          <h3>
-
-            Vehicle Details
-
-          </h3>
-
-
-
-          <div className="profile-row">
-
-
-            <p>
-
-              Vehicle Number
-
-            </p>
-
-
-            <b>
-
-              {user.vehicleNumber || "Not Added"}
-
-            </b>
-
-
-          </div>
-
-
-
-
-
-          <div className="profile-row">
-
-
-            <p>
-
-              Vehicle Type
-
-            </p>
-
-
-            <b>
-
-              {user.vehicleType || "Not Added"}
-
-            </b>
-
-
-          </div>
-
-
-
-        </div>
-
-
-
-      </div>
-
-
-
-
-
-
-
-      {stats && (
-
-
-        <div className="stats-container">
-
-
-
-          <div className="stat-card">
-
-
-            <h4>
-
-              Total
-
-            </h4>
-
-
-            <strong>
-
-              {stats.total}
-
-            </strong>
-
-
-          </div>
-
-
-
-
-
-          <div className="stat-card active">
-
-
-            <h4>
-
-              Active
-
-            </h4>
-
-
-            <strong>
-
-              {stats.active}
-
-            </strong>
-
-
-          </div>
-
-
-
-
-
-          <div className="stat-card cancel">
-
-
-            <h4>
-
-              Cancelled
-
-            </h4>
-
-
-            <strong>
-
-              {stats.cancelled}
-
-            </strong>
-
-
-          </div>
-
-
-
-        </div>
-
-
-      )}
-
-
-
-    </div>
-
-  );
+}
 
 };
 
+
+
+const fetchStats=async()=>{
+
+try{
+
+const res=await axios.get(
+
+`http://localhost:4000/booking/stats/${userId}`
+
+);
+
+setStats(res.data);
+
+}
+
+catch(err){
+
+console.log(err);
+
+}
+
+};
+
+
+
+if(!user){
+
+return(
+
+<div className="spx-loader">
+
+Loading...
+
+</div>
+
+);
+
+}
+
+
+
+return(
+
+<div className="spx-profile">
+
+
+
+<div className="spx-hero">
+
+
+
+<div className="spx-hero-content">
+
+
+
+<div className="spx-avatar">
+
+{user.Name.charAt(0)}
+
+</div>
+
+
+
+<div className="spx-text">
+
+
+<h1>
+
+{user.Name}
+
+<span>
+
+Verified
+
+</span>
+
+</h1>
+
+
+<p>
+
+Smart Parking Member
+
+</p>
+
+
+
+<div className="spx-info">
+
+
+<div>
+
+<FaEnvelope/>
+
+{user.email}
+
+</div>
+
+
+
+<div>
+
+<FaPhone/>
+
+{user.phone}
+
+</div>
+
+
+
+<div>
+
+<FaIdCard/>
+
+{user._id.slice(0,12)}
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+<div className="spx-image">
+
+
+<img
+
+src={heroCar}
+
+alt="hero"
+
+/>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+{stats && (
+
+<div className="spx-stats">
+
+
+
+<div className="spx-stat spx-blue">
+
+
+<div className="spx-icon">
+
+<FaParking/>
+
+</div>
+
+
+<div>
+
+<h2>
+
+{stats.total}
+
+</h2>
+
+<p>
+
+Bookings
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div className="spx-stat spx-green">
+
+
+<div className="spx-icon">
+
+<FaCalendarAlt/>
+
+</div>
+
+
+<div>
+
+<h2>
+
+{stats.active}
+
+</h2>
+
+<p>
+
+Active
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div className="spx-stat spx-red">
+
+
+<div className="spx-icon">
+
+✕
+
+</div>
+
+
+<div>
+
+<h2>
+
+{stats.cancelled}
+
+</h2>
+
+<p>
+
+Cancelled
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+)}
+
+
+
+
+
+
+
+<div className="spx-grid">
+
+
+
+
+
+<div className="spx-card">
+
+
+<h3>
+
+Personal Information
+
+</h3>
+
+
+
+<div className="spx-item">
+
+<FaEnvelope/>
+
+<div>
+
+<label>
+
+Email
+
+</label>
+
+<span>
+
+{user.email}
+
+</span>
+
+</div>
+
+</div>
+
+
+
+
+<div className="spx-item">
+
+<FaPhone/>
+
+<div>
+
+<label>
+
+Phone
+
+</label>
+
+<span>
+
+{user.phone}
+
+</span>
+
+</div>
+
+</div>
+
+
+
+
+<div className="spx-item">
+
+<FaIdCard/>
+
+<div>
+
+<label>
+
+User ID
+
+</label>
+
+<span>
+
+{user._id.slice(0,10)}
+
+</span>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div className="spx-card">
+
+
+<h3>
+
+Vehicle Details
+
+</h3>
+
+
+
+<div className="spx-item">
+
+<FaCar/>
+
+<div>
+
+<label>
+
+Vehicle Number
+
+</label>
+
+<span>
+
+{user.vehicleNumber || "Not Added"}
+
+</span>
+
+</div>
+
+</div>
+
+
+
+
+<div className="spx-item">
+
+<MdDirectionsCar/>
+
+<div>
+
+<label>
+
+Vehicle Type
+
+</label>
+
+<span>
+
+{user.vehicleType || "Not Added"}
+
+</span>
+
+</div>
+
+</div>
+
+
+
+
+<div className="spx-item">
+
+<FaCalendarAlt/>
+
+<div>
+
+<label>
+
+Member
+
+</label>
+
+<span>
+
+Premium User
+
+</span>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div className="spx-promos">
+
+
+
+<div className="spx-promo spx-one">
+
+
+<div>
+
+<h2>
+
+Park Smart
+
+</h2>
+
+<p>
+
+Reserve your parking slots instantly.
+
+</p>
+
+</div>
+
+
+<img
+
+src={parkImg}
+
+alt="promo"
+
+/>
+
+
+</div>
+
+
+
+
+
+
+<div className="spx-promo spx-two">
+
+
+<div>
+
+<h2>
+
+Book Anywhere
+
+</h2>
+
+<p>
+
+Access parking with one tap.
+
+</p>
+
+</div>
+
+
+<img
+
+src={phoneImg}
+
+alt="promo"
+
+/>
+
+
+</div>
+
+
+
+
+
+
+<div className="spx-promo spx-three">
+
+
+<div>
+
+<h2>
+
+Secure Parking
+
+</h2>
+
+<p>
+
+Monitored 24/7 for safety.
+
+</p>
+
+</div>
+
+
+<img
+
+src={secureImg}
+
+alt="promo"
+
+/>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+);
+
+};
 
 export default Profile;

@@ -3,12 +3,27 @@ import "../components/nav.css";
 import { Link, useNavigate } from "react-router";
 import axios from "axios";
 
+import {
+  FaHome,
+  FaParking,
+  FaStar,
+  FaUserCircle,
+  FaBell,
+  FaSignOutAlt,
+  FaShieldAlt
+} from "react-icons/fa";
+
+import { MdDashboard } from "react-icons/md";
+import { IoCarSportSharp } from "react-icons/io5";
+
 const Navbar = () => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
+  const navTheme = token ? "logged" : "guest";
 
   let user = null;
+
   try {
     user = JSON.parse(localStorage.getItem("user"));
   } catch (err) {
@@ -62,181 +77,166 @@ const Navbar = () => {
   ).length;
 
   return (
-    <nav className="xq_nav_shell">
+    <nav className={`xq_nav_shell ${token ? "logged_nav" : "guest_nav"}`}>
       <div className="xq_left_block">
-        <div className="xq_brand_mark">🚗 SmartPark</div>
+
+        <Link to="/" className="xq_logo_wrap">
+
+          <div className="xq_logo_icon">
+            <IoCarSportSharp />
+          </div>
+
+          <div className="ramees">
+            <h2>SmartPark</h2>
+            <span>Park Smarter</span>
+          </div>
+
+        </Link>
+
       </div>
 
       <div className="xq_mid_zone">
+
         {token ? (
           <>
             {isUser && (
               <>
                 <Link className="xq_link_item" to="/dashboard">
-                  Dashboard
+                  <MdDashboard />
+                  <span>Dashboard</span>
                 </Link>
-
-                <span className="xq_divider">•</span>
 
                 <Link className="xq_link_item" to="/mybookings">
-                  My Bookings
+                  <FaParking />
+                  <span>My Bookings</span>
                 </Link>
-
-                <span className="xq_divider">•</span>
 
                 <Link className="xq_link_item" to="/reviews">
-                  Reviews
+                  <FaStar />
+                  <span>Reviews</span>
                 </Link>
 
-                <span className="xq_divider">•</span>
-
                 <Link className="xq_link_item" to="/myprofile">
-                  Profile
+                  <FaUserCircle />
+                  <span>Profile</span>
                 </Link>
               </>
             )}
 
             {isAdmin && (
               <Link className="xq_link_item" to="/admin">
-                Admin
+                <FaShieldAlt />
+                <span>Admin</span>
               </Link>
             )}
           </>
         ) : (
           <>
             <Link className="xq_link_item" to="/">
-              Home
+              <FaHome />
+              <span>Home</span>
             </Link>
-
-            <span className="xq_divider">•</span>
 
             <Link className="xq_link_item" to="/reviews">
-              Reviews
+              <FaStar />
+              <span>Reviews</span>
             </Link>
 
-            <span className="xq_divider">•</span>
-
-            <Link className="xq_link_item" to="/login">
-              Login
+            <Link className="xq_link_item login_btn" to="/login">
+              <span>Login</span>
             </Link>
           </>
         )}
+
       </div>
 
       <div className="xq_right_block">
+
         {token && (
-          <div
-            style={{
-              position: "relative",
-              marginRight: "15px",
-            }}
-          >
+          <div className="xq_notification_wrapper">
+
             <span
-              style={{
-                cursor: "pointer",
-                fontSize: "20px",
-                userSelect: "none",
-              }}
+              className="xq_notification_icon"
               onClick={() => setOpen(!open)}
             >
-              🔔
+              <FaBell />
+
+              {cancelledCount > 0 && (
+                <span className="xq_notification_badge">
+                  {cancelledCount}
+                </span>
+              )}
             </span>
 
-            {cancelledCount > 0 && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: "-6px",
-                  right: "-8px",
-                  background: "red",
-                  color: "white",
-                  borderRadius: "50%",
-                  fontSize: "10px",
-                  padding: "2px 6px",
-                }}
-              >
-                {cancelledCount}
-              </span>
-            )}
-
             {open && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "-5px",
-                  right: "25px",
-                  background: "#fff",
-                  color: "#111",
-                  width: "200px",
-                  maxHeight: "220px",
-                  overflowY: "auto",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                  padding: "6px",
-                  zIndex: 999,
-                  fontSize: "12px",
-                }}
-              >
+              <div className="xq_notification_dropdown">
+
+                <div className="xq_notification_header">
+                  <FaBell />
+                  <span>Notifications</span>
+                </div>
+
                 {notifications.length === 0 ? (
-                  <p
-                    style={{
-                      textAlign: "center",
-                      margin: "10px 0",
-                    }}
-                  >
-                    No notifications
-                  </p>
+
+                  <div className="xq_empty_notification">
+                    No notifications available
+                  </div>
+
                 ) : (
+
                   notifications.map((n) => (
+
                     <div
                       key={n._id}
-                      style={{
-                        padding: "6px",
-                        borderBottom: "1px solid #eee",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "2px",
-                      }}
+                      className="xq_notification_card"
                     >
-                      <div
-                        style={{
-                          fontWeight: "600",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Slot: {n.slotNumber}
+
+                      <div className="xq_slot_title">
+                        <FaParking />
+                        <span>Slot {n.slotNumber}</span>
                       </div>
 
                       <div
-                        style={{
-                          fontSize: "12px",
-                          color:
-                            n.status === "cancelled"
-                              ? "red"
-                              : "green",
-                          fontWeight: "500",
-                        }}
+                        className={
+                          n.status === "cancelled"
+                            ? "xq_status_cancelled"
+                            : "xq_status_active"
+                        }
                       >
                         {n.status.toUpperCase()}
                       </div>
+
                     </div>
+
                   ))
+
                 )}
+
               </div>
             )}
+
           </div>
         )}
 
         {token && (
+
           <button
             className="xq_logout_btn"
             onClick={handleLogout}
           >
-            Logout
+
+            <FaSignOutAlt />
+
+            <span>Logout</span>
+
           </button>
+
         )}
+
       </div>
+
     </nav>
+
   );
 };
 

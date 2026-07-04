@@ -1,676 +1,1528 @@
+/* ===========================
+   ESTATE ADMIN DASHBOARD
+=========================== */
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
+body{
+background:#eef5ef;
+}
 
-.spadmin-wrapper{
-
+.estate-dashboard{
+width:100%;
 min-height:100vh;
-
-padding:40px;
-
-
-background:
-
-linear-gradient(
-135deg,
-#f8fafc,
-#eef2ff,
-#f1f5f9
-);
-
-
-font-family:
-"Segoe UI",
-system-ui,
-sans-serif;
-
-
-color:#0f172a;
-
-
-}
-
-
-
-
-
-
-
-
-.spadmin-main-title{
-
-
-text-align:center;
-
-
-font-size:48px;
-
-
-font-weight:900;
-
-
-letter-spacing:-1.5px;
-
-
-margin-bottom:55px;
-
-
-background:
-
-linear-gradient(
-90deg,
-#1e3a8a,
-#2563eb,
-#0f766e
-);
-
-
--webkit-background-clip:text;
-
--webkit-text-fill-color:transparent;
-
-
-}
-
-
-
-
-
-
-
-
-.spadmin-stats-grid{
-
-
-display:grid;
-
-
-grid-template-columns:
-repeat(auto-fit,minmax(280px,1fr));
-
-
-gap:28px;
-
-
-margin-bottom:45px;
-
-
-}
-
-
-
-
-
-
-
-
-.spadmin-stat-box{
-
-
-background:
-
-linear-gradient(
-145deg,
-rgba(255,255,255,.95),
-rgba(241,245,249,.9)
-);
-
-
-
-border-radius:28px;
-
-
 padding:35px;
-
-
-
-border:1px solid #e2e8f0;
-
-
-
-box-shadow:
-
-
-0 20px 45px rgba(15,23,42,.08);
-
-
-
-transition:.25s ease;
-
-
-position:relative;
-
-
-overflow:hidden;
-
-
-
-}
-
-
-
-
-
-.spadmin-stat-box::before{
-
-
-content:"";
-
-
-position:absolute;
-
-
-width:120px;
-
-height:120px;
-
-
-right:-35px;
-
-top:-35px;
-
-
-border-radius:50%;
-
-
-background:#dbeafe;
-
-
-opacity:.7;
-
-
-}
-
-
-
-
-
-.spadmin-stat-box:hover{
-
-
-transform:translateY(-7px);
-
-
-
-box-shadow:
-
-
-0 30px 70px rgba(15,23,42,.14);
-
-
-}
-
-
-
-
-
-
-
-.spadmin-stat-box::after{
-
-
-content:"";
-
-
-position:absolute;
-
-
-left:30px;
-
-top:30px;
-
-
-width:45px;
-
-height:45px;
-
-
-border-radius:14px;
-
-
 background:
-
-linear-gradient(
-135deg,
-#2563eb,
-#60a5fa
-);
-
-
-box-shadow:
-
-0 8px 20px rgba(37,99,235,.25);
-
-
+radial-gradient(circle at top right,#dce9df 2px,transparent 2px),
+linear-gradient(135deg,#eef5ef,#f8fbf8);
+background-size:40px 40px,100%;
 }
 
-
-
-
-
-.spadmin-stat-box h3{
-
-
-position:relative;
-
-
-margin-left:60px;
-
-
-font-size:15px;
-
-
-color:#64748b;
-
-
-font-weight:700;
-
-
+.estate-main{
+width:100%;
 }
 
+/* ===========================
+HEADER
+=========================== */
 
-
-
-
-.spadmin-stat-box p{
-
-
-font-size:44px;
-
-
-font-weight:900;
-
-
-margin-top:20px;
-
-
-color:#0f172a;
-
-
-}
-
-
-
-
-
-
-
-
-.spadmin-action-area{
-
-
+.estate-header{
 display:flex;
-
-
-justify-content:center;
-
-
-gap:18px;
-
-
-flex-wrap:wrap;
-
-
-margin-bottom:45px;
-
-
-}
-
-
-
-.spadmin-action-btn{
-
-
-padding:14px 28px;
-
-
-border-radius:16px;
-
-
-border:none;
-
-
-font-weight:800;
-
-
-cursor:pointer;
-
-
-box-shadow:
-
-0 10px 25px rgba(15,23,42,.1);
-
-
-transition:.2s;
-
-
-}
-
-
-
-.spadmin-action-btn:hover{
-
-
-transform:translateY(-3px);
-
-}
-
-
-
-
-
-.spadmin-create-btn{
-
-
-background:
-
-linear-gradient(
-135deg,
-#2563eb,
-#3b82f6
-);
-
-
-color:white;
-
-
-}
-
-
-
-
-.spadmin-delete-btn{
-
-
-background:
-
-linear-gradient(
-135deg,
-#ef4444,
-#f87171
-);
-
-
-color:white;
-
-
-}
-
-
-
-
-
-
-
-
-.spadmin-search{
-
-
-padding:15px 20px;
-
-
-border-radius:16px;
-
-
-border:1px solid #e2e8f0;
-
-
-background:white;
-
-
-box-shadow:
-
-0 10px 25px rgba(15,23,42,.08);
-
-
-}
-
-
-
-
-
-
-
-
-.spadmin-info-card{
-
-
-background:white;
-
-
+justify-content:space-between;
+align-items:center;
+margin-bottom:35px;
+padding:25px 30px;
+background:#fff;
 border-radius:22px;
-
-
-padding:25px;
-
-
-margin-bottom:18px;
-
-
-
-border:1px solid #e2e8f0;
-
-
-box-shadow:
-
-0 15px 35px rgba(15,23,42,.08);
-
-
-
+box-shadow:0 12px 30px rgba(0,0,0,.08);
 }
 
-
-
-.spadmin-info-card strong{
-
-
-color:#2563eb;
-
-
+.estate-title{
+font-size:34px;
+font-weight:700;
+color:#184637;
 }
 
-
-
-.spadmin-info-card p{
-
-
-color:#475569;
-
-
+.estate-subtitle{
+margin-top:6px;
+font-size:15px;
+color:#7d8b86;
 }
 
-
-
-
-
-
-
-
-.spadmin-slot-grid{
-
-
-display:grid;
-
-
-grid-template-columns:
-repeat(auto-fill,minmax(280px,1fr));
-
-
-gap:25px;
-
-
+.estate-header-right{
+display:flex;
+align-items:center;
+gap:20px;
 }
 
-
-
-
-.spadmin-slot-box{
-
-
-background:white;
-
-
-border-radius:24px;
-
-
-padding:25px;
-
-
-border:1px solid #e2e8f0;
-
-
-box-shadow:
-
-0 15px 35px rgba(15,23,42,.08);
-
-
-
-transition:.25s;
-
-
+.estate-search-box{
+background:#f6faf7;
+padding:12px 18px;
+border-radius:50px;
+border:1px solid #dde8e1;
 }
 
-
-
-.spadmin-slot-box:hover{
-
-
-transform:translateY(-5px);
-
-
-}
-
-
-
-
-
-.spadmin-slot-box h3{
-
-
-font-size:30px;
-
-
-color:#1e3a8a;
-
-
-}
-
-
-
-.spadmin-slot-box strong{
-
-
-color:#16a34a;
-
-
-}
-
-
-
-
-
-
-
-
-.spadmin-reset-button{
-
-
-background:
-
-linear-gradient(
-135deg,
-#f97316,
-#fb923c
-);
-
-
-
+.estate-search{
 border:none;
+outline:none;
+background:none;
+width:240px;
+font-size:15px;
+}
 
+.estate-admin-profile{
+display:flex;
+align-items:center;
+gap:12px;
+background:#eef6f0;
+padding:10px 18px;
+border-radius:50px;
+}
 
+.estate-avatar{
+width:52px;
+height:52px;
+border-radius:50%;
+background:#1f5e49;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:22px;
+font-weight:700;
+}
+
+.estate-admin-profile h4{
+font-size:16px;
+color:#1f5e49;
+}
+
+.estate-admin-profile span{
+font-size:13px;
+color:#7b8781;
+}
+
+/* ===========================
+STATISTICS
+=========================== */
+
+.estate-overview-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+margin-bottom:35px;
+}
+
+.estate-overview-card{
+background:#fff;
+padding:25px;
+border-radius:22px;
+display:flex;
+align-items:center;
+gap:20px;
+cursor:pointer;
+transition:.35s;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.estate-overview-card:hover{
+transform:translateY(-8px);
+}
+
+.estate-overview-card h2{
+font-size:34px;
+color:#1f5e49;
+margin-top:6px;
+}
+
+.estate-overview-card p{
+color:#77837d;
+font-size:15px;
+}
+
+.estate-icon{
+width:70px;
+height:70px;
+border-radius:18px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+background:#f4b54d;
+}
+
+/* ===========================
+BUTTONS
+=========================== */
+
+.estate-button-group{
+display:flex;
+gap:18px;
+margin-bottom:35px;
+flex-wrap:wrap;
+}
+
+.estate-btn{
+padding:14px 30px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+font-size:15px;
+font-weight:600;
+transition:.3s;
+}
+
+.estate-create{
+background:#1f5e49;
+color:#fff;
+}
+
+.estate-delete{
+background:#e74c3c;
+color:#fff;
+}
+
+.estate-refresh{
+background:#f4b54d;
+color:#184637;
+}
+
+.estate-btn:hover{
+transform:translateY(-4px);
+box-shadow:0 10px 18px rgba(0,0,0,.15);
+}
+/* =====================================
+   ANALYTICS SECTION
+===================================== */
+
+.estate-analytics-section{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:25px;
+margin-bottom:35px;
+align-items:start;
+}
+
+.estate-chart-card{
+background:#fff;
+border-radius:24px;
+padding:25px;
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+transition:.35s;
+}
+
+.estate-chart-card:hover{
+transform:translateY(-6px);
+}
+
+.estate-card-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.estate-card-top h3{
+font-size:22px;
+color:#184637;
+margin-bottom:5px;
+}
+
+.estate-card-top p{
+color:#7d8b86;
+font-size:14px;
+}
+
+.estate-badge{
+background:#1f5e49;
+color:#fff;
+padding:8px 18px;
+border-radius:30px;
+font-size:13px;
+font-weight:600;
+}
+
+.estate-chart-info{
+display:flex;
+gap:18px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.estate-info-box{
+flex:1;
+min-width:140px;
+background:#f6faf7;
+padding:18px;
+border-radius:18px;
+border:1px solid #e1ebe4;
+}
+
+.estate-info-box h4{
+font-size:14px;
+color:#7b8781;
+margin-bottom:10px;
+}
+
+.estate-info-box h2{
+font-size:28px;
+color:#1f5e49;
+}
+
+.estate-slot-details{
+display:flex;
+flex-direction:column;
+gap:14px;
+margin-bottom:18px;
+}
+
+.estate-slot-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 16px;
+background:#f6faf7;
 border-radius:14px;
-
-
-padding:12px;
-
-
-color:white;
-
-
-font-weight:800;
-
-
+font-size:15px;
 }
 
+.estate-slot-row strong{
+color:#184637;
+}
 
+/* =====================================
+   USERS SECTION
+===================================== */
 
+.estate-data-card{
+background:#fff;
+padding:28px;
+border-radius:24px;
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+margin-bottom:35px;
+}
 
+.estate-section-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
 
+.estate-section-header h2{
+color:#184637;
+font-size:26px;
+margin-bottom:5px;
+}
 
+.estate-section-header p{
+color:#7d8b86;
+}
 
+.estate-count-badge{
+background:#1f5e49;
+color:#fff;
+padding:10px 18px;
+border-radius:30px;
+font-weight:600;
+}
 
-.spadmin-filter-select{
+.estate-search-wrapper{
+margin-bottom:25px;
+}
 
+.estate-search-input{
+width:100%;
+padding:16px 22px;
+border-radius:50px;
+border:1px solid #dce6df;
+outline:none;
+font-size:15px;
+background:#f8fbf8;
+}
 
-padding:14px 22px;
+.estate-search-input:focus{
+border-color:#1f5e49;
+}
 
+.estate-user-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+gap:22px;
+}
 
+.estate-user-card{
+background:#f8fbf8;
+border-radius:20px;
+padding:22px;
+transition:.35s;
+border:1px solid #e4ebe5;
+}
+
+.estate-user-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.estate-user-top{
+display:flex;
+align-items:center;
+gap:18px;
+margin-bottom:20px;
+}
+
+.estate-user-avatar{
+width:60px;
+height:60px;
+border-radius:50%;
+background:#1f5e49;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:22px;
+font-weight:bold;
+}
+
+.estate-user-top h3{
+color:#184637;
+margin-bottom:4px;
+}
+
+.estate-user-top p{
+font-size:14px;
+color:#777;
+}
+
+.estate-user-details{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+}
+
+.estate-user-details span{
+display:block;
+font-size:13px;
+color:#888;
+margin-bottom:6px;
+}
+
+.estate-user-details strong{
+color:#184637;
+}
+
+/* =====================================
+   BOOKING SECTION
+===================================== */
+
+.estate-booking-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+gap:22px;
+}
+
+.estate-booking-card{
+background:#f9fcfa;
+border-radius:20px;
+padding:22px;
+border:1px solid #e2ebe4;
+transition:.35s;
+}
+
+.estate-booking-card:hover{
+transform:translateY(-5px);
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+}
+
+.estate-booking-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:20px;
+}
+
+.estate-booking-top h3{
+color:#184637;
+margin-bottom:4px;
+}
+
+.estate-booking-top p{
+font-size:14px;
+color:#777;
+}
+
+.estate-status{
+padding:8px 15px;
+border-radius:25px;
+font-size:13px;
+font-weight:600;
+text-transform:capitalize;
+}
+
+.estate-status.booked{
+background:#d8f5df;
+color:#1f7a3f;
+}
+
+.estate-status.cancelled{
+background:#ffe0e0;
+color:#d32f2f;
+}
+
+.estate-booking-body{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+margin-bottom:20px;
+}
+
+.estate-booking-body label{
+display:block;
+font-size:12px;
+color:#888;
+margin-bottom:5px;
+}
+
+.estate-booking-body strong{
+color:#184637;
+font-size:14px;
+}
+
+.estate-checkin-btn{
+width:100%;
+padding:14px;
+background:#1f5e49;
+border:none;
 border-radius:14px;
+color:#fff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
 
+.estate-checkin-btn:hover{
+background:#184637;
+}
 
-border:1px solid #e2e8f0;
+.estate-checked{
+width:100%;
+padding:14px;
+text-align:center;
+background:#dff6e5;
+color:#1b7a39;
+border-radius:14px;
+font-weight:600;
+}
 
+/* =====================================
+   SLOT SUMMARY
+===================================== */
 
-background:white;
+.estate-summary-card{
+background:#fff;
+padding:28px;
+border-radius:24px;
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+margin-bottom:35px;
+}
 
+.estate-summary-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:22px;
+}
+
+.estate-summary-box{
+background:#f8fbf8;
+padding:25px;
+border-radius:20px;
+text-align:center;
+border:1px solid #e3ebe5;
+transition:.35s;
+}
+
+.estate-summary-box:hover{
+transform:translateY(-6px);
+}
+
+.estate-summary-icon{
+font-size:34px;
+margin-bottom:15px;
+}
+
+.estate-summary-box h4{
+margin-bottom:10px;
+color:#666;
+}
+
+.estate-summary-box h2{
+font-size:34px;
+color:#1f5e49;
+}
+/* ===========================================
+   PARKING SLOT SECTION
+=========================================== */
+
+.estate-slot-section{
+margin-top:35px;
+}
+
+.estate-filter-box{
+display:flex;
+align-items:center;
+}
+
+.estate-filter-select{
+padding:12px 22px;
+border-radius:40px;
+border:1px solid #d9e5dc;
+background:#fff;
+font-size:15px;
+cursor:pointer;
+outline:none;
+transition:.3s;
+}
+
+.estate-filter-select:focus{
+border-color:#1f5e49;
+}
+
+.estate-slot-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+gap:25px;
+margin-top:25px;
+}
+
+.estate-slot-card{
+background:#fff;
+border-radius:22px;
+padding:24px;
+box-shadow:0 12px 28px rgba(0,0,0,.08);
+transition:.35s;
+border:2px solid transparent;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.estate-slot-card:hover{
+transform:translateY(-8px);
+}
+
+.estate-slot-card.available{
+border-left:8px solid #43a047;
+}
+
+.estate-slot-card.booked{
+border-left:8px solid #f4b54d;
+}
+
+.estate-slot-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.estate-slot-top h3{
+font-size:24px;
+color:#184637;
+}
+
+.estate-slot-status{
+padding:8px 18px;
+border-radius:30px;
+font-size:13px;
+font-weight:600;
+text-transform:capitalize;
+}
+
+.estate-slot-status.available{
+background:#dff5e3;
+color:#1e7d35;
+}
+
+.estate-slot-status.booked{
+background:#fff3d6;
+color:#d48b00;
+}
+
+.estate-slot-body{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.estate-slot-info{
+background:#f7fbf8;
+padding:14px;
+border-radius:14px;
+}
+
+.estate-slot-info label{
+display:block;
+font-size:12px;
+color:#888;
+margin-bottom:5px;
+}
+
+.estate-slot-info strong{
+color:#184637;
+font-size:15px;
+}
+
+.estate-empty-slot{
+height:250px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:#f8fbf8;
+border-radius:18px;
+border:2px dashed #d8e5dc;
+}
+
+.estate-empty-icon{
+font-size:65px;
+margin-bottom:15px;
+}
+
+.estate-empty-slot p{
+color:#6d7c75;
+font-size:16px;
+}
+
+.estate-reset-btn{
+margin-top:22px;
+width:100%;
+padding:15px;
+background:#d84343;
+border:none;
+border-radius:14px;
+color:#fff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.estate-reset-btn:hover{
+background:#b93232;
+transform:translateY(-2px);
+}
+
+/* ===========================================
+   SCROLLBAR
+=========================================== */
+
+::-webkit-scrollbar{
+width:8px;
+height:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#c9d8cf;
+border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+background:#eef5ef;
+}
+
+/* ===========================================
+   RECHARTS
+=========================================== */
+
+.recharts-wrapper{
+margin:auto;
+}
+
+.recharts-cartesian-grid line{
+stroke:#e8ece9;
+}
+
+.recharts-tooltip-wrapper{
+border-radius:12px;
+}
+
+/* ===========================================
+   ANIMATIONS
+=========================================== */
+
+@keyframes estateFade{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
 
 }
 
+to{
 
+opacity:1;
 
-
-
-
-
-
-.spadmin-wrapper > div[style]{
-
-
-background:white!important;
-
-
-border-radius:24px!important;
-
-
-box-shadow:
-
-0 20px 50px rgba(15,23,42,.12);
-
-
+transform:translateY(0);
 
 }
 
+}
 
+.estate-overview-card,
+.estate-chart-card,
+.estate-data-card,
+.estate-summary-card,
+.estate-slot-card{
+animation:estateFade .5s ease;
+}
 
+/* ===========================================
+   RESPONSIVE
+=========================================== */
 
+@media(max-width:1200px){
 
+.estate-analytics-section{
 
+grid-template-columns:1fr;
 
+}
+
+.recharts-wrapper{
+
+width:100%!important;
+
+}
+
+}
+
+@media(max-width:992px){
+
+.estate-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.estate-header-right{
+
+width:100%;
+
+justify-content:space-between;
+
+}
+
+.estate-chart-info{
+
+grid-template-columns:1fr;
+
+}
+
+}
 
 @media(max-width:768px){
 
+.estate-dashboard{
 
-.spadmin-wrapper{
-
-padding:20px;
-
-}
-
-
-.spadmin-main-title{
-
-font-size:34px;
+padding:18px;
 
 }
 
+.estate-title{
+
+font-size:28px;
+
+}
+
+.estate-search{
+
+width:160px;
+
+}
+
+.estate-overview-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.estate-booking-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.estate-user-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.estate-slot-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.estate-summary-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.estate-booking-body{
+
+grid-template-columns:1fr;
+
+}
+
+.estate-user-details{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.estate-button-group{
+
+flex-direction:column;
+
+}
+
+.estate-btn{
+
+width:100%;
+
+}
+
+.estate-header-right{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.estate-admin-profile{
+
+width:100%;
+
+justify-content:flex-start;
+
+}
+
+.estate-search-box{
+
+width:100%;
+
+}
+
+.estate-search{
+
+width:100%;
+
+}
+}
+.estate-dashboard{
+    position:relative;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at 15% 20%, rgba(83,151,255,.12), transparent 30%),
+    radial-gradient(circle at 85% 10%, rgba(255,196,85,.14), transparent 30%),
+    radial-gradient(circle at 70% 85%, rgba(0,210,170,.12), transparent 28%),
+    linear-gradient(135deg,#edf6ff,#f9fbff,#eefbf6);
+}
+
+.estate-dashboard::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.15;
+    background-image:
+    url("https://www.transparenttextures.com/patterns/topography.png");
+}
+
+.estate-dashboard::after{
+    content:"";
+    position:fixed;
+    right:-180px;
+    top:-120px;
+    width:520px;
+    height:520px;
+    background:radial-gradient(circle,#6fa8ff55,transparent 70%);
+    border-radius:50%;
+    filter:blur(40px);
+}
+.estate-header,
+.estate-chart-card,
+.estate-data-card,
+.estate-summary-card,
+.estate-slot-card{
+
+    background:
+    linear-gradient(145deg,
+    rgba(255,255,255,.94),
+    rgba(255,255,255,.82));
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.7);
+
+    position:relative;
+
+    overflow:hidden;
+}
+.estate-overview-card::before,
+.estate-chart-card::before,
+.estate-summary-box::before,
+.estate-slot-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.18;
+
+    background-image:url("https://www.transparenttextures.com/patterns/topography.png");
+
+    pointer-events:none;
+}
+.estate-overview-card:nth-child(1){
+
+background:linear-gradient(135deg,#ffffff,#f4edff,#ece5ff);
+
+}
+
+.estate-overview-card:nth-child(2){
+
+background:linear-gradient(135deg,#ffffff,#e8fff5,#ddfff0);
+
+}
+
+.estate-overview-card:nth-child(3){
+
+background:linear-gradient(135deg,#ffffff,#fff7e5,#fff0c6);
+
+}
+.estate-icon{
+
+color:white;
+
+box-shadow:0 20px 35px rgba(0,0,0,.15);
+
+}
+
+.estate-icon.users{
+
+background:linear-gradient(135deg,#8a3ffc,#6d28d9);
+
+}
+
+.estate-icon.booking{
+
+background:linear-gradient(135deg,#12c67a,#009f5d);
+
+}
+
+.estate-icon.slot{
+
+background:linear-gradient(135deg,#ffb000,#ff8b00);
+
+}
+.estate-summary-box:nth-child(1){
+
+background:linear-gradient(135deg,#fff,#eef3ff);
+
+}
+
+.estate-summary-box:nth-child(2){
+
+background:linear-gradient(135deg,#fff,#e7fff3);
+
+}
+
+.estate-summary-box:nth-child(3){
+
+background:linear-gradient(135deg,#fff,#fff2d9);
+
+}
+
+.estate-summary-box:nth-child(4){
+
+background:linear-gradient(135deg,#fff,#f5ecff);
+
+}
+.estate-chart-card::after{
+
+content:"";
+
+position:absolute;
+
+right:20px;
+
+bottom:15px;
+
+width:220px;
+
+height:120px;
+
+background:url("https://cdn-icons-png.flaticon.com/512/744/744465.png")
+no-repeat center;
+
+background-size:contain;
+
+opacity:.08;
+
+pointer-events:none;
+}
+
+.estate-summary-card::after{
+
+content:"";
+
+position:absolute;
+
+right:40px;
+
+bottom:20px;
+
+width:240px;
+
+height:140px;
+
+background:url("https://cdn-icons-png.flaticon.com/512/2554/2554936.png")
+no-repeat center;
+
+background-size:contain;
+
+opacity:.08;
+}
+.estate-overview-card:hover,
+.estate-chart-card:hover,
+.estate-summary-box:hover,
+.estate-slot-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+
+0 25px 60px rgba(41,87,255,.12),
+
+0 10px 30px rgba(0,0,0,.08);
+}
+/* ==========================================================
+        MODERN PREMIUM THEME
+==========================================================*/
+
+/* Beautiful background */
+
+body{
+    background:#edf5ff;
+}
+
+.estate-dashboard{
+    position:relative;
+    overflow:hidden;
+
+    background:
+    radial-gradient(circle at 15% 20%,rgba(117,190,255,.25),transparent 28%),
+    radial-gradient(circle at 85% 10%,rgba(255,181,212,.22),transparent 30%),
+    radial-gradient(circle at 50% 85%,rgba(161,255,196,.18),transparent 28%),
+    linear-gradient(135deg,#f6fbff,#eef8ff,#f5fff8);
+
+    background-size:cover;
+}
+
+/* contour lines */
+
+.estate-dashboard::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:.12;
+
+    background-image:
+    repeating-radial-gradient(circle at 20% 30%,
+    transparent 0px,
+    transparent 24px,
+    rgba(55,100,180,.25) 25px,
+    transparent 26px);
+
+    animation:moveContour 20s linear infinite;
+}
+
+/* floating graphics */
+
+.estate-dashboard::after{
+
+    content:"🚗 🚘 🚙";
+
+    position:absolute;
+
+    right:40px;
+
+    top:100px;
+
+    font-size:90px;
+
+    opacity:.05;
+
+    transform:rotate(-18deg);
+
+    pointer-events:none;
+
+}
+
+@keyframes moveContour{
+
+from{
+
+transform:translateY(0);
+
+}
+
+to{
+
+transform:translateY(-70px);
+
+}
+
+}
+
+/* ==========================================================
+HEADER
+==========================================================*/
+
+.estate-header{
+
+background:rgba(255,255,255,.55);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.6);
+
+}
+
+/* ==========================================================
+OVERVIEW CARDS
+==========================================================*/
+
+.estate-overview-card{
+
+color:white;
+
+border:none;
+
+overflow:hidden;
+
+position:relative;
+
+}
+
+.estate-overview-card:nth-child(1){
+
+background:linear-gradient(135deg,#667eea,#764ba2);
+
+}
+
+.estate-overview-card:nth-child(2){
+
+background:linear-gradient(135deg,#00c6ff,#0072ff);
+
+}
+
+.estate-overview-card:nth-child(3){
+
+background:linear-gradient(135deg,#43e97b,#38f9d7);
+
+}
+
+.estate-overview-card h2,
+.estate-overview-card p{
+
+color:white;
+
+}
+
+.estate-overview-card::after{
+
+content:"";
+
+position:absolute;
+
+right:-40px;
+
+top:-40px;
+
+width:140px;
+
+height:140px;
+
+background:rgba(255,255,255,.15);
+
+border-radius:50%;
+
+}
+
+.estate-icon{
+
+background:rgba(255,255,255,.18);
+
+backdrop-filter:blur(10px);
+
+color:white;
+
+}
+
+/* ==========================================================
+BUTTONS
+==========================================================*/
+
+.estate-create{
+
+background:linear-gradient(135deg,#00b09b,#96c93d);
+
+}
+
+.estate-delete{
+
+background:linear-gradient(135deg,#ff416c,#ff4b2b);
+
+}
+
+.estate-refresh{
+
+background:linear-gradient(135deg,#f7971e,#ffd200);
+
+color:white;
+
+}
+
+/* ==========================================================
+ALL WHITE CARDS
+==========================================================*/
+
+.estate-chart-card,
+.estate-data-card,
+.estate-summary-card,
+.estate-slot-card{
+
+background:rgba(255,255,255,.62);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.5);
+
+}
+
+/* ==========================================================
+INFO BOXES
+==========================================================*/
+
+.estate-info-box:nth-child(1){
+
+background:linear-gradient(135deg,#d9ecff,#ffffff);
+
+}
+
+.estate-info-box:nth-child(2){
+
+background:linear-gradient(135deg,#d8ffe8,#ffffff);
+
+}
+
+.estate-info-box:nth-child(3){
+
+background:linear-gradient(135deg,#ffe5e5,#ffffff);
+
+}
+
+.estate-info-box{
+
+border:none;
+
+box-shadow:0 8px 25px rgba(0,0,0,.06);
+
+}
+
+/* ==========================================================
+SUMMARY BOXES
+==========================================================*/
+
+.estate-summary-box:nth-child(1){
+
+background:linear-gradient(135deg,#d7ebff,#ffffff);
+
+}
+
+.estate-summary-box:nth-child(2){
+
+background:linear-gradient(135deg,#dfffe7,#ffffff);
+
+}
+
+.estate-summary-box:nth-child(3){
+
+background:linear-gradient(135deg,#fff0d9,#ffffff);
+
+}
+
+.estate-summary-box:nth-child(4){
+
+background:linear-gradient(135deg,#ffe0ef,#ffffff);
+
+}
+
+.estate-summary-box{
+
+border:none;
+
+box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+}
+
+/* ==========================================================
+USER CARDS
+==========================================================*/
+
+.estate-user-card{
+
+background:linear-gradient(145deg,#ffffff,#eef9ff);
+
+border:none;
+
+}
+
+/* ==========================================================
+BOOKING CARDS
+==========================================================*/
+
+.estate-booking-card{
+
+background:linear-gradient(145deg,#ffffff,#eef8ff);
+
+border:none;
+
+}
+
+/* ==========================================================
+SLOT CARDS
+==========================================================*/
+
+.estate-slot-card{
+
+background:linear-gradient(145deg,#ffffff,#eef8ff);
+
+}
+
+.estate-slot-card.available{
+
+border-left:8px solid #34d399;
+
+}
+
+.estate-slot-card.booked{
+
+border-left:8px solid #f59e0b;
+
+}
+
+/* ==========================================================
+EMPTY SLOT
+==========================================================*/
+
+.estate-empty-slot{
+
+background:linear-gradient(145deg,#f6fbff,#eef9ff);
+
+}
+
+/* ==========================================================
+SEARCH
+==========================================================*/
+
+.estate-search-box{
+
+background:rgba(255,255,255,.7);
+
+backdrop-filter:blur(12px);
+
+}
+
+/* ==========================================================
+CHART VISIBILITY
+==========================================================*/
+
+.recharts-cartesian-axis text{
+
+fill:#173d32 !important;
+
+font-size:14px !important;
+
+font-weight:600;
+
+}
+
+.recharts-cartesian-grid line{
+
+stroke:#bdd7cb !important;
+
+}
+
+.recharts-tooltip-wrapper{
+
+font-size:14px;
+
+}
+
+.recharts-surface{
+
+overflow:visible;
+
+}
+
+/* Bigger Pie */
+
+.recharts-pie-sector{
+
+stroke:white;
+
+stroke-width:4px;
+
+}
+
+/* ==========================================================
+HOVER
+==========================================================*/
+
+.estate-overview-card:hover,
+.estate-chart-card:hover,
+.estate-summary-box:hover,
+.estate-slot-card:hover,
+.estate-user-card:hover,
+.estate-booking-card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 20px 45px rgba(0,0,0,.15);
 
 }

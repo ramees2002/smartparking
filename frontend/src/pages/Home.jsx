@@ -1,336 +1,563 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import axios from "axios";
+
 import "../components/home.css";
 
 const Home = () => {
-
   const [reviews, setReviews] = useState([]);
+  const [availableSlots, setAvailableSlots] = useState(0);
+  const [bookedSlots, setBookedSlots] = useState(0);
+
 
   useEffect(() => {
-    fetchReviews();
-  }, []);
+
+ fetchReviews();
+
+ fetchInsights();
+
+}, []);
 
   const fetchReviews = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:4000/review"
-      );
-
+      const res = await axios.get("http://localhost:4000/review");
       setReviews(res.data || []);
     } catch (error) {
       console.log(error);
     }
   };
 
+
+  const fetchInsights = async () => {
+
+try{
+
+const slotRes = await axios.get(
+"http://localhost:4000/slot/getallslots"
+);
+
+const slots =
+slotRes.data.slot || [];
+
+setAvailableSlots(
+
+slots.filter(
+
+s=>s.status==="available"
+
+).length
+
+);
+
+
+
+setBookedSlots(
+
+slots.filter(
+s => s.status === "booked"
+).length
+
+);
+
+}
+
+catch(error){
+
+console.log(error);
+
+}
+
+}
+
   const avgRating =
     reviews.length > 0
       ? (
-          reviews.reduce(
-            (sum, review) => sum + review.rating,
-            0
-          ) / reviews.length
+          reviews.reduce((sum, item) => sum + item.rating, 0) / reviews.length
         ).toFixed(1)
-      : 0;
+      : "0.0";
+
+      const totalSlots = 50;
+
+
+const occupiedSlots =
+  totalSlots - availableSlots;
+
+const occupancyRate = Math.round(
+  (occupiedSlots / totalSlots) * 100
+);
+
+const peakHours =
+  "10:00 AM - 1:00 PM";
 
   return (
-    <div className="home">
-
-      
-      <div className="hero">
-
-        <h1>Smart Parking Finder + Live Slots</h1>
-
-        <p>
-          Find available parking slots in real time and book instantly without
-          hassle. A smart solution for modern parking management.
-        </p>
-
-        <Link to="/login">
-          <button className="cta-btn">
-            Get Started
-          </button>
-        </Link>
-
-      </div>
-
-    
-      <div className="features">
-
-        <div className="card">
-          🚗 Live Slot Tracking
-        </div>
-
-        <div className="card">
-          ⚡ Instant Booking
-        </div>
-
-        <div className="card">
-          🔐 Secure Authentication
-        </div>
-
-        <div className="card">
-          📊 User Dashboard
-        </div>
-
-      </div>
-
-      
-      <div className="about-section">
-
-        <h2>About SmartPark</h2>
-
-        <p>
-          SmartPark is a smart parking management platform designed to help
-          users find available parking slots in real time. The system allows
-          users to reserve parking spaces instantly, manage bookings, receive
-          notifications, and navigate directly to parking locations using
-          integrated maps.
-        </p>
-
-      </div>
-
-      
-      <div className="how-section">
-
-        <h2>How It Works</h2>
-
-        <div className="how-grid">
-
-          <div className="how-card">
-            <h3>1. Register</h3>
-            <p>Create an account and add vehicle details.</p>
+    <div className="warAeroRoot">
+      {/* ================= HERO ZONE ================= */}
+      <section className="warHeroZone">
+        <div className="warHeroShade"></div>
+        <div className="warHeroWrap">
+          <div className="warHeroLeft">
+            <span className="warHeroChip">🚗 SMART PARKING PLATFORM</span>
+            <h1>
+              Find & Reserve
+              <br />
+              <span>Parking Spaces</span>
+              <br />
+              Instantly
+            </h1>
+            <p>
+              SmartPark helps drivers locate available parking spaces in real
+              time, reserve instantly and navigate directly to destinations
+              using integrated maps.
+            </p>
+            <div className="warHeroButtons">
+              <Link to="/login">
+                <button className="warPrimaryBtn">Book Parking</button>
+              </Link>
+              <Link to="/login">
+                <button className="warSecondaryBtn">Explore</button>
+              </Link>
+            </div>
           </div>
 
-          <div className="how-card">
-            <h3>2. Find Parking</h3>
-            <p>View available slots in real time.</p>
-          </div>
+        
+<div className="warHeroRight">
 
-          <div className="how-card">
-            <h3>3. Book Slot</h3>
-            <p>Reserve a parking space instantly.</p>
-          </div>
+  <div className="warBookingGlass">
 
-          <div className="how-card">
-            <h3>4. Check In</h3>
-            <p>Admin confirms arrival and activates parking.</p>
-          </div>
+    <h2>Parking Insights</h2>
+
+    <p>Real-time parking overview</p>
+
+    <div className="warInsightRow">
+      <span>🚗 Available Slots</span>
+      <strong>{availableSlots}</strong>
+    </div>
+
+    <div className="warInsightRow">
+      <span>📋 Total Bookings</span>
+      <strong>{bookedSlots}</strong>
+    </div>
+
+    <div className="warInsightRow">
+      <span>⭐ Average Rating</span>
+      <strong>{avgRating}</strong>
+    </div>
+
+    <div className="warInsightRow">
+      <span>🔒 Security</span>
+      <strong>CCTV Enabled</strong>
+    </div>
+
+    <Link to="/map">
+      <button className="warSearchButton">
+        View Parking
+      </button>
+    </Link>
+
+  </div>
+
+</div>
 
         </div>
+      </section>
 
-      </div>
-
-    
-      <div className="extra-features">
-
-        <h2>System Features</h2>
-
-        <ul>
-
-          <li>✅ User Registration and Login</li>
-          <li>✅ Real-Time Parking Slot Availability</li>
-          <li>✅ Live Parking Status Updates</li>
-          <li>✅ Parking Location Finder</li>
-          <li>✅ Interactive Map Integration</li>
-          <li>✅ Google Maps Navigation</li>
-          <li>✅ Slot Reservation and Booking</li>
-          <li>✅ Parking History Management</li>
-          <li>✅ Admin Dashboard</li>
-          <li>✅ Parking Slot Management</li>
-          <li>✅ Search and Filter Parking Areas</li>
-          <li>✅ Vehicle Information Management</li>
-          <li>✅ Notifications</li>
-          <li>✅ Secure Authentication</li>
-          <li>✅ Admin Check-In System</li>
-          <li>✅ Auto Slot Release (TTL)</li>
-          <li>✅ Mobile Friendly Design</li>
-
-        </ul>
-
-      </div>
-
-    
-      <div className="tech-section">
-
-        <h2>Technology Stack</h2>
-
-        <div className="tech-grid">
-
-          <div className="tech-card">
-            <h3>Frontend</h3>
-            <p>React JS</p>
-            <p>CSS</p>
+      {/* ================= STATISTICS ================= */}
+      <section className="warStatsZone">
+        <div className="warStatsGrid">
+          <div className="warMetricCard">
+            <div className="warMetricIcon">👥</div>
+            <div>
+              <h2>10K+</h2>
+              <p>Happy Users</p>
+            </div>
           </div>
 
-          <div className="tech-card">
-            <h3>Backend</h3>
-            <p>Node JS</p>
-            <p>Express JS</p>
+          <div className="warMetricCard">
+            <div className="warMetricIcon">🚘</div>
+            <div>
+              <h2>5K+</h2>
+              <p>Bookings</p>
+            </div>
           </div>
 
-          <div className="tech-card">
-            <h3>Database</h3>
-            <p>MongoDB</p>
+          <div className="warMetricCard">
+            <div className="warMetricIcon">📍</div>
+            <div>
+              <h2>100+</h2>
+              <p>Parking Areas</p>
+            </div>
           </div>
 
-          <div className="tech-card">
-            <h3>Maps & Location</h3>
-            <p>Leaflet JS</p>
-            <p>OpenStreetMap</p>
-            <p>Google Maps Directions</p>
+          <div className="warMetricCard">
+            <div className="warMetricIcon">⭐</div>
+            <div>
+              <h2>{avgRating}</h2>
+              <p>Average Rating</p>
+            </div>
           </div>
+        </div>
+      </section>
 
+      {/* ================= FEATURES ================= */}
+      <section className="warFeatureZone">
+        <div className="warHeadingBlock">
+          <span>SMART FEATURES</span>
+          <h2>Everything You Need</h2>
+          <p>
+            SmartPark provides modern parking solutions with intelligent tools
+            for a smoother journey.
+          </p>
         </div>
 
-      </div>
+        <div className="warFeatureGrid">
+          <div className="warFeatureBox">
+            <div className="warFeatureBadge">🚗</div>
+            <h3>Live Parking</h3>
+            <p>
+              Track parking spaces in real time before reaching your
+              destination.
+            </p>
+          </div>
 
-    
-      <div className="workflow-section">
+          <div className="warFeatureBox">
+            <div className="warFeatureBadge">📍</div>
+            <h3>GPS Navigation</h3>
+            <p>Integrated navigation system for direct route guidance.</p>
+          </div>
 
-        <h2>System Workflow</h2>
+          <div className="warFeatureBox">
+            <div className="warFeatureBadge">⚡</div>
+            <h3>Fast Booking</h3>
+            <p>Reserve slots within seconds using our seamless platform.</p>
+          </div>
 
-        <p>
-          User Login → Find Available Slot →
-          Book Slot → Receive Confirmation →
-          Admin Check In → Parking Active →
-          Booking Completed / Cancelled →
-          Slot Released Automatically
-        </p>
+          <div className="warFeatureBox">
+            <div className="warFeatureBadge">🔐</div>
+            <h3>Secure Access</h3>
+            <p>Protected authentication and reservation management.</p>
+          </div>
+        </div>
+      </section>
 
-      </div>
+      {/* ================= WHY CHOOSE US ================= */}
+      <section className="warReasonZone">
+        <div className="warReasonLeft">
+          <span className="warReasonChip">WHY SMARTPARK</span>
+          <h2>Smarter Parking For Modern Cities</h2>
+          <p>
+            Our intelligent platform offers real-time parking visibility,
+            instant reservations, live navigation, and secure experiences for
+            every user.
+          </p>
 
-    
-      <div className="about-section">
+          <div className="warReasonList">
+            <div className="warReasonItem">
+              <div className="warReasonIcon">🚘</div>
+              <div>
+                <h4>Live Updates</h4>
+                <p>Monitor available spaces before leaving home.</p>
+              </div>
+            </div>
 
-        <h2>Why SmartPark?</h2>
+            <div className="warReasonItem">
+              <div className="warReasonIcon">📡</div>
+              <div>
+                <h4>Navigation Support</h4>
+                <p>Built-in maps guide drivers towards their reserved slots.</p>
+              </div>
+            </div>
 
-        <p>
-          SmartPark reduces parking search time,
-          improves parking efficiency, prevents
-          slot conflicts, provides real-time
-          visibility of parking availability,
-          and offers a seamless booking
-          experience through a modern web-based
-          platform.
-        </p>
+            <div className="warReasonItem">
+              <div className="warReasonIcon">⚡</div>
+              <div>
+                <h4>Instant Booking</h4>
+                <p>Book parking spaces without waiting.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      </div>
+        <div className="warReasonRight">
+          <div className="warInsightCard warBluePanel">
+            <h3>500+</h3>
+            <p>Daily Reservations</p>
+          </div>
+          <div className="warInsightCard warOrangePanel">
+            <h3>100+</h3>
+            <p>Parking Locations</p>
+          </div>
+          <div className="warInsightCard warGreenPanel">
+            <h3>24/7</h3>
+            <p>Availability Tracking</p>
+          </div>
+          <div className="warInsightCard warPurplePanel">
+            <h3>99%</h3>
+            <p>Customer Satisfaction</p>
+          </div>
+        </div>
+      </section>
 
-      
-      <div className="reviews-section">
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="warFlowZone">
+        <div className="warHeadingBlock">
+          <span>HOW IT WORKS</span>
+          <h2>Reserve Parking In Four Steps</h2>
+          <p>
+            A quick and effortless process to find and reserve your parking
+            space instantly.
+          </p>
+        </div>
 
-        <h2>⭐ User Reviews</h2>
+        <div className="warFlowGrid">
+          <div className="warFlowCard">
+            <div className="warFlowNumber">01</div>
+            <div className="warFlowIcon">👤</div>
+            <h3>Create Account</h3>
+            <p>
+              Register your SmartPark account and unlock access to parking
+              reservations.
+            </p>
+          </div>
 
-        <div className="review-summary">
+          <div className="warFlowCard">
+            <div className="warFlowNumber">02</div>
+            <div className="warFlowIcon">📍</div>
+            <h3>Search Parking</h3>
+            <p>
+              Discover available parking spaces near your destination in real
+              time.
+            </p>
+          </div>
 
-          <div className="review-score">
-            {avgRating}
+          <div className="warFlowCard">
+            <div className="warFlowNumber">03</div>
+            <div className="warFlowIcon">⚡</div>
+            <h3>Reserve Slot</h3>
+            <p>Choose a suitable location and confirm your booking within seconds.</p>
+          </div>
+
+          <div className="warFlowCard">
+            <div className="warFlowNumber">04</div>
+            <div className="warFlowIcon">🚗</div>
+            <h3>Park Easily</h3>
+            <p>Navigate directly to your reserved parking space stress-free.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= PARKING OPTIONS ================= */}
+      <section className="warParkingZone">
+        <div className="warHeadingBlock">
+          <span>PARKING OPTIONS</span>
+          <h2>Choose Your Parking Type</h2>
+          <p>Different parking solutions designed for modern drivers.</p>
+        </div>
+
+        <div className="warParkingGrid">
+          <div className="warParkingCard">
+            <div className="warParkingImage">
+              <img
+                src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=900&q=80"
+                alt="Indoor Parking"
+              />
+            </div>
+            <div className="warParkingBody">
+              <div className="warParkingBadge">Premium</div>
+              <h3>Indoor Parking</h3>
+              <p>Covered parking areas with CCTV monitoring and enhanced protection.</p>
+              <button className="warParkingButton">Explore</button>
+            </div>
+          </div>
+
+          <div className="warParkingCard">
+            <div className="warParkingImage">
+              <img
+                src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?auto=format&fit=crop&w=900&q=80"
+                alt="Outdoor Parking"
+              />
+            </div>
+            <div className="warParkingBody">
+              <div className="warParkingBadge">Popular</div>
+              <h3>Outdoor Parking</h3>
+              <p>Affordable parking spaces for commuters and daily travelers.</p>
+              <button className="warParkingButton">Explore</button>
+            </div>
+          </div>
+
+          <div className="warParkingCard">
+            <div className="warParkingImage">
+              <img
+                src="https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=900&q=80"
+                alt="EV Parking"
+              />
+            </div>
+            <div className="warParkingBody">
+              <div className="warParkingBadge">reserved</div>
+              <h3>reserved parking</h3>
+              <p>pre-book your parking slot and enjoy hassle-free parking experience</p>
+              <button className="warParkingButton">Explore</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= GALLERY ================= */}
+      <section className="warxGallerySection">
+        <div className="warxSectionHeader">
+          <span>OUR GALLERY</span>
+          <h2>Smart Parking Experience</h2>
+        </div>
+
+        <div className="warxGalleryGrid">
+          <div className="warxGalleryItem">
+            <img
+              src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=700&q=80"
+              alt=""
+            />
+            <div className="warxGalleryBadge">Parking Zone</div>
+          </div>
+
+          <div className="warxGalleryItem">
+            <img
+              src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=700&q=80"
+              alt=""
+            />
+            <div className="warxGalleryBadge">SmartPark</div>
+          </div>
+
+          <div className="warxGalleryItem">
+            <img
+              src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=700&q=80"
+              alt=""
+            />
+            <div className="warxGalleryBadge">Premium Parking</div>
+          </div>
+
+          <div className="warxGalleryItem">
+            <img
+              src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=700&q=80"
+              alt=""
+            />
+            <div className="warxGalleryBadge">Secure Parking</div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= REVIEWS ================= */}
+      <section className="warxReviewSection">
+        <div className="warxSectionHeader">
+          <span>TESTIMONIALS</span>
+          <h2>What Our Users Say</h2>
+        </div>
+
+        <div className="warxReviewSummary">
+          <div className="warxRatingCircle">
+            <h1>{avgRating}</h1>
+            <span>★★★★★</span>
+          </div>
+          <div>
+            <h3>{reviews.length} Reviews</h3>
+            <p>Trusted by SmartPark users across the city.</p>
+          </div>
+        </div>
+
+        <div className="warxReviewGrid">
+          {reviews.length === 0 ? (
+            <div className="warxEmptyReview">No Reviews Yet</div>
+          ) : (
+            reviews.map((review) => (
+              <div className="warxReviewCard" key={review._id}>
+                <div className="warxReviewHead">
+                  <div className="warxReviewAvatar">
+                    {review.userName?.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <h4>{review.userName}</h4>
+                    <div className="warxReviewStars">
+                      {"⭐".repeat(review.rating)}
+                    </div>
+                  </div>
+                </div>
+                <p className="warxReviewText">{review.comment}</p>
+                <small className="warxReviewDate">
+                  {new Date(review.createdAt).toLocaleDateString()}
+                </small>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="warctasecx">
+        <div className="warctabox">
+          <div>
+            <h2>Ready To Park Smarter?</h2>
+            <p>Join thousands of drivers using SmartPark for easy and secure parking.</p>
+          </div>
+          <Link to="/login">
+            <button className="warctabtn">Get Started</button>
+          </Link>
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="warfootersec">
+        <div className="warfooterglow"></div>
+        <div className="warfootergrid">
+          <div>
+            <h2>SmartPark</h2>
+            <p>
+              Smart parking made simple with live availability, instant booking,
+              navigation, and secure access.
+            </p>
+            <div className="warfootersocial">
+              <a href="#">🚗</a>
+              <a href="#">📍</a>
+              <a href="#">⚡</a>
+              <a href="#">🔒</a>
+            </div>
           </div>
 
           <div>
-
-            <h3>
-              {reviews.length} Reviews
-            </h3>
-
-            <p>
-              Trusted by SmartPark users
-            </p>
-
+            <h3>Features</h3>
+            <ul>
+              <li>Live Parking</li>
+              <li>Instant Booking</li>
+              <li>GPS Navigation</li>
+              <li>Parking History</li>
+              <li>Availability</li>
+            </ul>
           </div>
 
-        </div>
-
-        <div className="review-grid">
-
-          {reviews.length === 0 ? (
-
-            <div className="review-empty">
-              No reviews yet
-            </div>
-
-          ) : (
-
-            reviews.map((review) => (
-
-              <div
-                key={review._id}
-                className="review-card"
-              >
-
-                <div className="review-header">
-
-                  <h4>
-                    {review.userName}
-                  </h4>
-
-                  <span>
-                    {"⭐".repeat(review.rating)}
-                  </span>
-
-                </div>
-
-                <p className="review-comment">
-                  {review.comment}
-                </p>
-
-                <small>
-                  {new Date(
-                    review.createdAt
-                  ).toLocaleDateString()}
-                </small>
-
-              </div>
-
-            ))
-
-          )}
-
-        </div>
-
-        {!localStorage.getItem("token") && (
-
-          <div
-            style={{
-              textAlign: "center",
-              marginTop: "25px"
-            }}
-          >
-
-            <Link to="/login">
-              <button className="cta-btn">
-                Login To Write Review
-              </button>
-            </Link>
-
+          <div>
+            <h3>Technology</h3>
+            <ul>
+              <li>React</li>
+              <li>Node.js</li>
+              <li>Express</li>
+              <li>MongoDB</li>
+              <li>REST API</li>
+            </ul>
           </div>
 
-        )}
+          <div className="warfootercontact">
+            <h3>Contact</h3>
+            <p>📧 support@smartpark.com</p>
+            <p>📞 +91 98765 43210</p>
+            <p>📍 Kerala, India</p>
+          </div>
+        </div>
 
-      </div>
-
-    
-      <div className="footer-section">
-
-        <h2>
-          Smart Parking Finder + Live Slots
-        </h2>
-
-        <p>
-          A complete smart parking management
-          solution built using React,
-          Node.js, Express.js, MongoDB and
-          Leaflet Maps.
-        </p>
-
-        <p>
-          ©️ 2026 SmartPark.
-          All Rights Reserved.
-        </p>
-
-      </div>
-
+        <div className="warfooterbottom">
+          <p>© 2026 SmartPark All Rights Reserved.</p>
+          <div className="warfooterlinks">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
