@@ -20,7 +20,7 @@ const Home = () => {
 
   const fetchReviews = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/review");
+      const res = await axios.get("https://smartparking-backend-49tg.onrender.com/review");
       setReviews(res.data || []);
     } catch (error) {
       console.log(error);
@@ -33,7 +33,7 @@ const Home = () => {
 try{
 
 const slotRes = await axios.get(
-"http://localhost:4000/slot/getallslots"
+"https://smartparking-backend-49tg.onrender.com/slot/getallslots"
 );
 
 const slots =

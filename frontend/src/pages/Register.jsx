@@ -38,7 +38,7 @@ const Register = () => {
     try {
 
       await axios.post(
-        "http://localhost:4000/user/register",
+        "https://smartparking-backend-49tg.onrender.com/user/register",
         {
           Name,
           email,

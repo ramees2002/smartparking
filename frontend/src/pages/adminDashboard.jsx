@@ -58,9 +58,9 @@ const AdminDashboard = () => {
 
   const loadAdminData = async () => {
     try {
-      const u = await axios.get("http://localhost:4000/admin/users");
-      const b = await axios.get("http://localhost:4000/admin/bookings");
-      const s = await axios.get("http://localhost:4000/admin/slots");
+      const u = await axios.get("https://smartparking-backend-49tg.onrender.com/admin/users");
+      const b = await axios.get("https://smartparking-backend-49tg.onrender.com/admin/bookings");
+      const s = await axios.get("https://smartparking-backend-49tg.onrender.com/admin/slots");
 
       setUsers(u.data.users || u.data);
       setBookings(b.data.bookings || b.data);
@@ -71,23 +71,23 @@ const AdminDashboard = () => {
   };
 
   const createSlots = async () => {
-    await axios.post("http://localhost:4000/slot/createslots");
+    await axios.post("https://smartparking-backend-49tg.onrender.com/slot/createslots");
     loadAdminData();
   };
 
   const deleteAllSlots = async () => {
-    await axios.delete("http://localhost:4000/slot/deleteslots");
+    await axios.delete("https://smartparking-backend-49tg.onrender.com/slot/deleteslots");
     loadAdminData();
   };
 
   const resetSlot = async (id) => {
-    await axios.put(`http://localhost:4000/admin/slot/reset/${id}`);
+    await axios.put(`https://smartparking-backend-49tg.onrender.com/admin/slot/reset/${id}`);
     loadAdminData();
   };
 
   const checkIn = async (bookingId) => {
     try {
-      await axios.put(`http://localhost:4000/admin/checkin/${bookingId}`);
+      await axios.put(`https://smartparking-backend-49tg.onrender.com/admin/checkin/${bookingId}`);
       alert("Vehicle checked in");
       loadAdminData();
     } catch (error) {

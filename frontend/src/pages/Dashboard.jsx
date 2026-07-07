@@ -18,7 +18,7 @@ const getSlots=async()=>{
 try{
 
 const res=await axios.get(
-"http://localhost:4000/slot/getallslots"
+"https://smartparking-backend-49tg.onrender.com/slot/getallslots"
 );
 
 setSlots(res.data.slot||[]);
@@ -61,7 +61,7 @@ return;
 
 const orderRes=await axios.post(
 
-"http://localhost:4000/payment/create-booking-order",
+"https://smartparking-backend-49tg.onrender.com/payment/create-booking-order",
 
 {
 
@@ -91,7 +91,7 @@ try{
 
 const verifyRes=await axios.post(
 
-"http://localhost:4000/payment/verify-booking-payment",
+"https://smartparking-backend-49tg.onrender.com/payment/verify-booking-payment",
 
 {
 
