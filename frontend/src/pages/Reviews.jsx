@@ -19,7 +19,7 @@ const Reviews = () => {
     try {
 
       const res = await axios.get(
-        "https://smartparking-1eu5.onrender.com/review"
+        "http://localhost:4000/review"
       );
 
       setReviews(res.data);
@@ -48,7 +48,7 @@ const Reviews = () => {
       if (editingId) {
 
         await axios.put(
-          `https://smartparking-1eu5.onrender.com/review/${editingId}`,
+          `http://localhost:4000/review/${editingId}`,
           {
             userId,
             rating,
@@ -61,7 +61,7 @@ const Reviews = () => {
       } else {
 
         await axios.post(
-          "https://smartparking-1eu5.onrender.com/review/add",
+          "http://localhost:4000/review/add",
           {
             userId,
             rating,
@@ -115,7 +115,7 @@ block:"center"
     try {
 
       await axios.delete(
-        `https://smartparking-1eu5.onrender.com/review/${reviewId}/${userId}`
+        `http://localhost:4000/review/${reviewId}/${userId}`
       );
 
       alert("Review deleted");

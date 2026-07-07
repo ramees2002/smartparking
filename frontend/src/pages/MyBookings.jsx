@@ -45,7 +45,7 @@ const MyBookings = () => {
       }
 
       const res = await axios.get(
-        `https://smartparking-1eu5.onrender.com/booking/mybookings/${userId}`
+        `http://localhost:4000/booking/mybookings/${userId}`
       );
 
       setBookings(res.data.bookings || []);
@@ -65,7 +65,7 @@ const MyBookings = () => {
     try {
 
       await axios.post(
-        `https://smartparking-1eu5.onrender.com/booking/cancel/${bookingId}`
+        `http://localhost:4000/booking/cancel/${bookingId}`
       );
 
       fetchBookings();
@@ -85,7 +85,7 @@ const MyBookings = () => {
       const userId = localStorage.getItem("userId");
 
       const orderRes = await axios.post(
-        "https://smartparking-1eu5.onrender.com/payment/create-extension-order",
+        "http://localhost:4000/payment/create-extension-order",
         {
           userId,
           bookingId,
@@ -111,7 +111,7 @@ const MyBookings = () => {
           try {
 
             const verifyRes = await axios.post(
-              "https://smartparking-1eu5.onrender.com/payment/verify-extension-payment",
+              "http://localhost:4000/payment/verify-extension-payment",
               {
                 razorpay_order_id:
                   response.razorpay_order_id,

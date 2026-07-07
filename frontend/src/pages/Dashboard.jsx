@@ -18,7 +18,7 @@ const getSlots=async()=>{
 try{
 
 const res=await axios.get(
-"https://smartparking-1eu5.onrender.com/slot/getallslots"
+"http://localhost:4000/slot/getallslots"
 );
 
 setSlots(res.data.slot||[]);
@@ -61,7 +61,7 @@ return;
 
 const orderRes=await axios.post(
 
-"https://smartparking-1eu5.onrender.com/payment/create-booking-order",
+"http://localhost:4000/payment/create-booking-order",
 
 {
 
@@ -91,7 +91,7 @@ try{
 
 const verifyRes=await axios.post(
 
-"https://smartparking-1eu5.onrender.com/payment/verify-booking-payment",
+"http://localhost:4000/payment/verify-booking-payment",
 
 {
 

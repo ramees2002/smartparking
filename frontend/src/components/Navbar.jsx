@@ -51,7 +51,7 @@ const Navbar = () => {
       if (!userId) return;
 
       const res = await axios.get(
-        `https://smartparking-1eu5.onrender.com/booking/mybookings/${userId}`
+        `http://localhost:4000/booking/mybookings/${userId}`
       );
 
       setNotifications(res.data.bookings || []);
